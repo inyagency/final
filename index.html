@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="INYA — Sistemas operativos para negocios gastronómicos independientes en crecimiento. Control del margen, inventario y operación para restaurantes, dark kitchens y pequeñas fábricas gastronómicas." />
+  <meta name="keywords"
+    content="sistemas operativos, restaurante, dark kitchen, control de margen, inventario, operación gastronómica, INYA" />
+  <title>INYA — Sistemas Operativos para Negocios Gastronómicos</title>
+
+  <!-- Preconnect fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="images/logo.png" type="image/png" />
+  <script src="translations.js"></script>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       PARTICLES CONTAINER
+       ============================================================ -->
+  <div class="particles-container" id="particles" aria-hidden="true"></div>
+
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="Navegación principal">
+    <div class="container nav-inner">
+
+      <!-- Logo -->
+      <a href="#hero" class="nav-logo" aria-label="Inya inicio">
+        <img src="images/logo.png" alt="Inya logo" height="42" />
+        <span class="nav-logo-text">Inya<span>.</span></span>
+      </a>
+
+      <!-- Desktop links -->
+      <ul class="nav-links" role="list">
+        <li><a href="#para-quien" class="nav-link" data-i18n="nav_problem">El Problema</a></li>
+        <li><a href="#solucion" class="nav-link" data-i18n="nav_system">El Sistema</a></li>
+        <li><a href="#proceso" class="nav-link" data-i18n="nav_method">Metodología</a></li>
+        <li><a href="#servicios" class="nav-link" data-i18n="nav_packs">Paquetes</a></li>
+      </ul>
+
+      <!-- Language Toggle -->
+      <div class="lang-toggle" id="langToggle" aria-label="Cambiar idioma">
+        <button class="lang-btn active" id="lang-es" onclick="setLang('es')">ES</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" id="lang-en" onclick="setLang('en')">EN</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" id="lang-de" onclick="setLang('de')">DE</button>
+        <span class="lang-sep">|</span>
+        <button class="lang-btn" id="lang-pt" onclick="setLang('pt')">PT</button>
+      </div>
+
+      <button onclick="openModal()" class="nav-cta" id="nav-cta-btn" data-i18n="nav_cta">Agendar Diagnóstico</button>
+
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menú móvil">
+    <a href="#para-quien" class="nav-link" onclick="closeMobileMenu()" data-i18n="nav_problem">El Problema</a>
+    <a href="#solucion" class="nav-link" onclick="closeMobileMenu()" data-i18n="nav_system">El Sistema</a>
+    <a href="#proceso" class="nav-link" onclick="closeMobileMenu()" data-i18n="nav_method">Metodología</a>
+    <a href="#servicios" class="nav-link" onclick="closeMobileMenu()" data-i18n="nav_packs">Paquetes</a>
+    <div class="lang-toggle-mobile" style="display: flex; gap: 10px; margin-bottom: 20px;">
+        <button class="lang-btn active" onclick="setLang('es')">ES</button>
+        <button class="lang-btn" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" onclick="setLang('pt')">PT</button>
+    </div>
+    <a href="#contacto" class="btn btn-primary btn-lg" onclick="closeMobileMenu()" data-i18n="nav_cta">Agendar Diagnóstico</a>
+  </div>
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section class="hero" id="hero" aria-label="Sección principal">
+    <div class="container">
+      <div class="hero-grid">
+
+        <!-- Left: copy -->
+        <div class="hero-content">
+
+          <!-- Badge -->
+          <div class="hero-badge">
+            <span class="hero-badge-icon">🍽️</span>
+            <span class="hero-badge-dot"></span>
+            <span class="hero-badge-text" data-i18n="hero_badge">Para dueños de empresas facturando <strong>60K€ - 120K€/mes</strong></span>
+          </div>
+
+          <!-- Title -->
+          <h1 class="hero-title" data-i18n="hero_title">
+            Tu empresa factura bien.<br />
+            <span class="gradient-text">Pero la falta de estructura se devora tu margen.</span>
+          </h1>
+
+          <!-- Subtitle -->
+          <p class="hero-subtitle" data-i18n="hero_subtitle">
+            Implementamos Sistemas Operativos Internos para negocios gastronómicos en crecimiento. Organización absoluta, control de rentabilidad e infraestructuras que escalan. Sin caos y sin depender de ti el 100% del tiempo.
+          </p>
+
+          <!-- CTAs -->
+          <div class="hero-cta-group">
+            <button onclick="openModal()" class="btn btn-primary btn-lg" id="hero-cta-main" data-i18n="hero_cta_main">
+              Solicita tu Diagnóstico Express (Gratuito)
+            </button>
+            <a href="#proceso" class="btn btn-outline btn-lg" id="hero-cta-sec" data-i18n="hero_cta_sec">
+              Ver cómo funcionamos ↓
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-value">
+                <span class="counter" data-target="30">0</span><span> días</span>
+              </span>
+              <span class="hero-stat-label" data-i18n="stat_1">Sistema funcionando</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">
+                <span class="counter" data-target="10">0</span><span class="accent">%+</span>
+              </span>
+              <span class="hero-stat-label" data-i18n="stat_2">Recuperación de margen</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value">
+                <span class="counter" data-target="20">0</span><span>h</span>
+              </span>
+              <span class="hero-stat-label" data-i18n="stat_3">Horas/semana liberadas</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right: visual -->
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orbit-ring">
+            <div class="orbit-dot"></div>
+          </div>
+          <img src="images/hero_visual.png" alt="INYA sistemas gastronómicos" class="hero-img" width="540" height="540" />
+          <!-- Floating chips -->
+          <div class="hero-chip chip-1">
+            <span class="hero-chip-icon">📦</span>
+            <span data-i18n="sol_feat_3_title">Auditoría y Freno de Mermas</span>
+          </div>
+          <div class="hero-chip chip-2">
+            <span class="hero-chip-icon">💰</span>
+            <span data-i18n="sol_feat_1_title">Visibilidad y Control Financiero</span>
+          </div>
+          <div class="hero-chip chip-3">
+            <span class="hero-chip-icon">👥</span>
+            <span data-i18n="sol_feat_2_title">Sistematización de Equipos</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EL ESPEJO (Problema Real)
+       ============================================================ -->
+  <section class="proof-strip para-quien" id="para-quien" aria-label="El problema real">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:2rem">
+        <span class="section-label" data-i18n="problem_label">El Espejo</span>
+        <h2 class="section-title" data-i18n="problem_title">La radiografía de tu caos 100% <span class="gradient-text">real.</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto; max-width: 700px;" data-i18n="problem_desc">
+          La mayor trampa de tener ingresos altos es creer que todo va bien. Si alguna vez has sentido esto, estás en el lugar correcto:
+        </p>
+      </div>
+      <div class="who-grid">
+        <div class="who-card reveal">
+          <div class="who-card-icon">⏳</div>
+          <h3 data-i18n="problem_bullet_1_title">Vives apagando incendios.</h3>
+          <ul class="who-list">
+            <li data-i18n="problem_bullet_1_desc">Trabajas entre 60 y 80 horas semanales cubriendo los huecos de tu equipo.</li>
+          </ul>
+        </div>
+        <div class="who-card reveal">
+          <div class="who-card-icon">💸</div>
+          <h3 data-i18n="problem_bullet_2_title">El misterio de fin de mes.</h3>
+          <ul class="who-list">
+            <li data-i18n="problem_bullet_2_desc">La cuenta del banco entra dinero, pero no sabes exactamente dónde quedó tu margen o cuánto te cuesta producir cada plato.</li>
+          </ul>
+        </div>
+        <div class="who-card reveal">
+          <div class="who-card-icon">👥</div>
+          <h3 data-i18n="problem_bullet_3_title">Dependencia absoluta.</h3>
+          <ul class="who-list">
+            <li data-i18n="problem_bullet_3_desc">Si te vas de vacaciones, el estándar cae, los costes suben o el servicio colapsa.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       AGITACIÓN DEL DOLOR
+       ============================================================ -->
+  <section class="proof-strip" style="background: rgba(40,10,10,0.15); border-top: 1px solid rgba(180,40,40,0.2); border-bottom: 1px solid rgba(180,40,40,0.2); padding: 80px 0;" aria-label="El costo del caos">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom:0">
+        <span class="section-label" style="color: #ef4444; border-color: #ef4444;" data-i18n="agitation_label">Agitación del Dolor</span>
+        <h2 class="section-title" style="color: #ef4444;" data-i18n="agitation_title">Estás financiando la desorganización de tu equipo.</h2>
+        <p class="section-subtitle" style="margin: 0 auto; max-width: 800px; color: var(--text-tertiary);" data-i18n="agitation_desc">
+          Cada día que operas sin un sistema claro de check-lists, sin control estricto de mermas y sin protocolos automatizados, estás drenando tu cuenta bancaria. <strong>Vender no es ganar dinero. El margen se gana en la operación.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LA NUEVA CREENCIA
+       ============================================================ -->
+  <section class="about" style="padding: 100px 0 60px;" aria-label="El cambio de paradigma">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label" data-i18n="belief_label">La Nueva Creencia</span>
+        <h2 class="section-title" data-i18n="belief_title">Vender más <span class="gradient-text">NO es la solución.</span></h2>
+        <p class="section-subtitle" style="margin: 0 auto; max-width: 800px;" data-i18n="belief_desc">
+          Añadir más clientes a un sistema roto solo acelera el colapso. No necesitas otra agencia de marketing.
+        </p>
+      </div>
+      <div class="reveal" style="background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.12) 0%, rgba(var(--primary-rgb), 0.04) 100%); border: 1px solid rgba(var(--gold-rgb), 0.2); border-radius: var(--radius-lg); padding: 40px; text-align: center; max-width: 800px; margin: 0 auto; box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+        <p style="font-size: 24px; font-weight: 800; color: var(--gold-500); letter-spacing: -0.01em;" data-i18n="belief_highlight">El problema es la organización. La solución es el sistema.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LA SOLUCIÓN (INYA)
+       ============================================================ -->
+  <section class="about" id="solucion" aria-label="Nuestra solución">
+    <div class="container">
+      <div class="about-grid" style="grid-template-columns: 1fr;">
+        <div class="about-content" style="max-width: 900px; margin: 0 auto; text-align: center;">
+          <span class="section-label reveal" style="justify-content: center;" data-i18n="sol_label">El Ecosistema Inya</span>
+          <h2 class="section-title reveal" data-i18n="sol_title">INYA: El Sistema Operativo<br><span class="gradient-text">de tu rentabilidad.</span></h2>
+          <p class="section-subtitle reveal" style="margin: 0 auto 48px;" data-i18n="sol_sub">
+            No somos una agencia de marketing digital ni vendemos "software genérico". Somos <strong>Arquitectos Operativos</strong>. Organizamos, estructuramos e implementamos la infraestructura que dirige tu negocio cuando tú no estás.
+          </p>
+
+          <div class="about-features reveal">
+            <div class="about-feature" style="flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+              <span class="about-feature-icon" style="font-size: 32px; margin-bottom: 12px;">📊</span>
+              <div>
+                <span class="about-feature-title" data-i18n="sol_feat_1_title">Visibilidad y Control Financiero</span>
+                <span class="about-feature-text" data-i18n="sol_feat_1_desc">Conoce tu margen de rentabilidad y costes de food-cost en tiempo real. Decisiones basadas en datos exactos, no en intuición.</span>
+              </div>
+            </div>
+            <div class="about-feature" style="flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+              <span class="about-feature-icon" style="font-size: 32px; margin-bottom: 12px;">⚙️</span>
+              <div>
+                <span class="about-feature-title" data-i18n="sol_feat_2_title">Sistematización de Equipos</span>
+                <span class="about-feature-text" data-i18n="sol_feat_2_desc">Estructuramos a tu personal. Protocolos estrictos de apertura, producción y cierre para que tu cocina opere como una fábrica Suiza.</span>
+              </div>
+            </div>
+            <div class="about-feature" style="flex-direction: column; align-items: flex-start; justify-content: flex-start;">
+              <span class="about-feature-icon" style="font-size: 32px; margin-bottom: 12px;">🛡️</span>
+              <div>
+                <span class="about-feature-title" data-i18n="sol_feat_3_title">Auditoría y Freno de Mermas</span>
+                <span class="about-feature-text" data-i18n="sol_feat_3_desc">Control obsesivo de inventarios y trazabilidad. Detenemos las fugas de capital ocultas en la operativa diaria.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROCESS — How It Works
+       ============================================================ -->
+  <section class="process-section" id="proceso" aria-label="Nuestro proceso">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label" data-i18n="meth_label">Metodología</span>
+        <h2 class="section-title" data-i18n="meth_title">Del desgaste al control absoluto<br /><span class="gradient-text">en 4 pasos</span></h2>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step reveal">
+          <div class="step-number">01</div>
+          <h3 class="step-title" data-i18n="meth_step_1_title">Diagnóstico de Pérdida</h3>
+          <p class="step-desc" data-i18n="meth_step_1_desc">Analizamos tu operación actual y localizamos las fallas exactas donde pierdes euros diarios.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-number">02</div>
+          <h3 class="step-title" data-i18n="meth_step_2_title">Arquitectura de Sistemas</h3>
+          <p class="step-desc" data-i18n="meth_step_2_desc">Diseñamos los flujos de información, control de inventario y cuadros de mando adaptados a tus locales.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-number">03</div>
+          <h3 class="step-title" data-i18n="meth_step_3_title">Despliegue en Producción</h3>
+          <p class="step-desc" data-i18n="meth_step_3_desc">Implementamos la tecnología y los sistemas sin interrumpir tu servicio ni un solo minuto.</p>
+        </div>
+        <div class="process-step reveal">
+          <div class="step-number">04</div>
+          <h3 class="step-title" data-i18n="meth_step_4_title">Alineamiento Operativo</h3>
+          <p class="step-desc" data-i18n="meth_step_4_desc">Capacitamos a tu plantilla. Aseguramos adopción total para que el sistema opere por sí solo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       NUESTROS PAQUETES (SERVICES)
+       ============================================================ -->
+  <section class="services" id="servicios" aria-label="Nuestros paquetes">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label" data-i18n="packs_label">Nuestros paquetes</span>
+        <h2 class="section-title" data-i18n="packs_title">Infraestructuras diseñadas para <span class="gradient-text">la etapa de madurez de tu negocio</span></h2>
+      </div>
+
+      <div class="packages-grid spotify-pricing">
+        <!-- Package 1: Silver Mind -->
+        <div class="package-card spotify-card reveal" style="border-color: var(--text-tertiary); box-shadow: 0 0 20px rgba(161, 161, 170, 0.15);">
+          <div class="spot-badge" style="background-color: var(--text-tertiary); color: #000;" data-i18n="pack_1_setup">Setup: 3-4 semanas</div>
+          <div class="spot-header">
+            <div class="spot-brand"><img src="images/logo.png" alt="Inya" width="20"> <span style="color: var(--text-secondary);">INYA Base</span></div>
+            <h3 class="spot-title" style="color: var(--text-tertiary);" data-i18n="pack_1_name">Silver Mind</h3>
+            <p class="spot-price" data-i18n="pack_1_price">Control base de la empresa</p>
+            <p class="spot-subprice" data-i18n="pack_1_subprice">Estandariza el día a día</p>
+          </div>
+          <hr class="spot-divider">
+          <ul class="spot-features">
+            <li data-i18n="pack_1_feat_1">✓ Estandariza la operativa para salir del control micro</li>
+            <li data-i18n="pack_1_feat_2">✓ Organización de flujos de trabajo en toda la empresa</li>
+            <li data-i18n="pack_1_feat_3">✓ Checklists estructurados de apertura y cierre</li>
+            <li data-i18n="pack_1_feat_4">✓ Gestión visual de turnos y personal</li>
+          </ul>
+          <button onclick="openModal()" class="btn spot-btn" style="background-color: var(--text-tertiary); color: #000;" data-i18n="pack_btn">Consultar Disponibilidad</button>
+          <p class="spot-terms"><span data-i18n="pack_terms"><a href="legal.html" target="_blank">Se aplican términos</a>. Permanencia mínima de </span>4 meses.</p>
+        </div>
+
+        <!-- Package 2: Ruphay Core -->
+        <div class="package-card spotify-card reveal spot-featured" style="border-color: var(--gold-500); box-shadow: 0 0 30px rgba(194, 158, 84, 0.25);">
+          <div class="spot-badge" style="background-color: var(--gold-500); color: #000;" data-i18n="pack_2_setup">Setup: 4-6 semanas</div>
+          <div class="spot-header">
+            <div class="spot-brand"><img src="images/logo.png" alt="Inya" width="20"> <span style="color: var(--gold-400);">INYA Pro</span></div>
+            <h3 class="spot-title" style="color: var(--gold-500);" data-i18n="pack_2_name">Ruphay Core</h3>
+            <p class="spot-price" data-i18n="pack_2_price">Control de margen e inventario</p>
+            <p class="spot-subprice" data-i18n="pack_2_subprice">Blinda las cuentas de tu empresa</p>
+          </div>
+          <hr class="spot-divider">
+          <ul class="spot-features">
+            <li data-i18n="pack_2_feat_1">✓ Dominio total de inventarios a tiempo real</li>
+            <li data-i18n="pack_2_feat_2">✓ Alertas automáticas de stock y mermas</li>
+            <li data-i18n="pack_2_feat_3">✓ Reportes financieros exactos operativos (Costos limpios)</li>
+            <li data-i18n="pack_2_feat_4">✓ Todo lo incluido en Silver Mind</li>
+          </ul>
+          <button onclick="openModal()" class="btn spot-btn" style="background-color: var(--gold-500); color: #000;" data-i18n="pack_btn">Consultar Disponibilidad</button>
+          <p class="spot-terms"><span data-i18n="pack_terms"><a href="legal.html" target="_blank">Se aplican términos</a>. Permanencia mínima de </span>6 meses.</p>
+        </div>
+
+        <!-- Package 3: Legacy Control -->
+        <div class="package-card spotify-card reveal" style="border-color: var(--primary-300); box-shadow: 0 0 20px rgba(77, 167, 184, 0.15);">
+          <div class="spot-badge" style="background-color: var(--primary-300); color: #000;" data-i18n="pack_3_setup">Setup: 6-8 semanas</div>
+          <div class="spot-header">
+            <div class="spot-brand"><img src="images/logo.png" alt="Inya" width="20"> <span style="color: var(--primary-200);">INYA Scale</span></div>
+            <h3 class="spot-title" style="color: var(--primary-300);" data-i18n="pack_3_name">Legacy Control</h3>
+            <p class="spot-price" data-i18n="pack_3_price">Control total y escalabilidad</p>
+            <p class="spot-subprice" data-i18n="pack_3_subprice">Visión para múltiples locales</p>
+          </div>
+          <hr class="spot-divider">
+          <ul class="spot-features">
+            <li data-i18n="pack_3_feat_1">✓ Control centralizado de capacidad productiva</li>
+            <li data-i18n="pack_3_feat_2">✓ Dashboards corporativos y análisis gerenciales</li>
+            <li data-i18n="pack_3_feat_3">✓ Preparación de arquitectura para abrir nuevas filiales</li>
+            <li data-i18n="pack_3_feat_4">✓ Todo lo incluido en Ruphay Core</li>
+          </ul>
+          <button onclick="openModal()" class="btn spot-btn" style="background-color: var(--primary-300); color: #000;" data-i18n="pack_btn">Consultar Disponibilidad</button>
+          <p class="spot-terms"><span data-i18n="pack_terms"><a href="legal.html" target="_blank">Se aplican términos</a>. Permanencia mínima de </span>9 meses.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       LEAD MAGNET & CTA FINAL
+       ============================================================ -->
+  <section class="cta-final" id="contacto" aria-label="Sección de contacto">
+    <div class="container">
+      <span class="section-label reveal" style="justify-content:center" data-i18n="cta_label">Diagnóstico Express</span>
+      <h2 class="cta-final-title reveal" data-i18n="cta_title_1">
+        Descubre hoy mismo por dónde <span class="gradient-text">pierdes rentabilidad</span>
+      </h2>
+      <p class="cta-final-sub reveal" style="max-width: 650px;" data-i18n="cta_desc_1">
+        Nuestro <strong>Diagnóstico Express de Pérdida Oculta</strong> es una evaluación estratégica (1to1) de 30 minutos donde auditaremos las bases de tu operativa actual. Te llevarás los 3 focos exactos donde estás perdiendo margen y cómo frenarlo. Cero venta agresiva, solo claridad absoluta.
+      </p>
+      <div class="btn-group reveal" style="margin-bottom: 80px;">
+        <button onclick="openModal()" class="btn btn-primary btn-lg animate-pulse-glow" id="cta-main-btn" data-i18n="cta_btn_1">
+          Solicitar Diagnóstico Express
+        </button>
+      </div>
+
+      <hr style="border: none; border-top: 1px solid rgba(var(--primary-rgb), 0.15); margin: 0 auto 80px; width: 60%;" />
+
+      <h2 class="cta-final-title reveal" style="font-size: clamp(28px, 4vw, 42px);" data-i18n="cta_title_2">
+        Recupera tu empresa. <span class="gradient-text">Y recupera tu tiempo.</span>
+      </h2>
+      <p class="cta-final-sub reveal" style="max-width: 700px;" data-i18n="cta_desc_2">
+        Llevas demasiado tiempo sosteniendo el peso de toda la operación sobre tus hombros. Ya demostraste que sabes vender y construir un concepto de éxito. Ahora toca demostrar que puedes orquestar una empresa que funcione sin ti.
+      </p>
+      <div class="btn-group reveal">
+        <button onclick="openModal()" class="btn btn-outline btn-lg" style="color: #fff; border-color: rgba(255,255,255,0.2);" data-i18n="cta_btn_2">
+          Agendar llamada de cualificación
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-main">
+
+        <!-- Brand -->
+        <div class="footer-brand">
+          <a href="#hero" class="nav-logo" aria-label="Inya inicio">
+            <img src="images/logo.png" alt="Inya" height="36" />
+            <span class="nav-logo-text">Inya<span>.</span></span>
+          </a>
+          <p>
+            Automatizamos y organizamos la información de tu empresa con
+            inteligencia artificial. Tu operación, reinventada.
+          </p>
+          <nav class="social-links" aria-label="Redes sociales">
+            <a href="https://www.instagram.com/inyagency/" target="_blank" rel="noopener" class="social-link instagram" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Services -->
+        <div class="footer-col">
+          <h4>Servicios</h4>
+          <ul>
+            <li><a href="#servicios">Automatización de Procesos</a></li>
+            <li><a href="#servicios">Organización con IA</a></li>
+            <li><a href="#servicios">Business Intelligence</a></li>
+            <li><a href="#servicios">Optimización de Flujos</a></li>
+            <li><a href="#servicios">Integración IA</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="footer-col">
+          <h4>Empresa</h4>
+          <ul>
+            <li><a href="#para-quien">El Problema</a></li>
+            <li><a href="#solucion">El Sistema INYA</a></li>
+            <li><a href="#proceso">Metodología</a></li>
+            <li><a href="#servicios">Paquetes</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <ul>
+            <li><a href="mailto:hola@inyagency.com">hola@inyagency.com</a></li>
+            <li><a href="https://wa.me/351930946625">WhatsApp</a></li>
+            <li><a href="#contacto">Agendar Diagnóstico</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 <span>Inya</span>. Todos los derechos reservados.</p>
+        <nav class="footer-legal" aria-label="Legal">
+          <a href="legal.html" target="_blank">Privacidad</a>
+          <a href="legal.html" target="_blank">Términos</a>
+          <a href="legal.html" target="_blank">Cookies</a>
+        </nav>
+      </div>
+
+    </div>
+  </footer>
+  <!-- ============================================================
+       CONTACT FORM MODAL
+       ============================================================ -->
+  <div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+
+      <!-- Close button -->
+      <button class="modal-close" id="modalClose" aria-label="Cerrar formulario" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <!-- Header -->
+      <div class="modal-header">
+        <div class="modal-icon">🔍</div>
+        <h2 class="modal-title" id="modalTitle" data-i18n="modal_title">Diagnóstico Express</h2>
+        <p class="modal-subtitle" data-i18n="modal_sub">Descubre hoy mismo dónde se fuga tu dinero. Sin compromiso.</p>
+      </div>
+
+      <!-- Form -->
+      <form class="modal-form" id="contactForm" novalidate>
+
+        <!-- Nombre -->
+        <div class="form-group">
+          <label for="fieldName" class="form-label" data-i18n="modal_name">Tu Nombre <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input type="text" id="fieldName" name="name" class="form-input" placeholder="Nombre completo" autocomplete="name" required />
+          </div>
+          <span class="form-error" id="errorName"></span>
+        </div>
+
+        <!-- Empresa -->
+        <div class="form-group">
+          <label for="fieldCompany" class="form-label" data-i18n="modal_company">Nombre de la empresa <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <span class="input-icon">🏢</span>
+            <input type="text" id="fieldCompany" name="company" class="form-input" placeholder="Tu empresa" autocomplete="organization" required />
+          </div>
+          <span class="form-error" id="errorCompany"></span>
+        </div>
+
+        <!-- Facturación -->
+        <div class="form-group">
+          <label for="fieldRevenue" class="form-label" data-i18n="modal_revenue">Facturación mensual aproximada <span class="required">*</span></label>
+          <div class="input-wrapper" style="position: relative;">
+            <span class="input-icon">💶</span>
+            <select id="fieldRevenue" name="revenue" class="form-input" style="appearance: none; background-color: transparent; padding-left: 48px; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); width: 100%; height: 50px; color: var(--text-primary);" required>
+              <option value="" disabled selected style="color: #000;" data-i18n="modal_opt_1">Selecciona una opción</option>
+              <option value="Menos de 60K" style="color: #000;" data-i18n="modal_opt_2">Menos de 60K €</option>
+              <option value="60K - 120K" style="color: #000;" data-i18n="modal_opt_3">Entre 60K y 120K €</option>
+              <option value="Más de 120K" style="color: #000;" data-i18n="modal_opt_4">Más de 120K €</option>
+            </select>
+            <div style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text-tertiary);">▼</div>
+          </div>
+          <span class="form-error" id="errorRevenue"></span>
+        </div>
+
+        <!-- Mensaje -->
+        <div class="form-group">
+          <label for="fieldMessage" class="form-label" data-i18n="modal_frust">Tu mayor frustración operativa <span class="required">*</span></label>
+          <div class="input-wrapper textarea-wrapper">
+            <span class="input-icon textarea-icon">💬</span>
+            <textarea id="fieldMessage" name="message" class="form-input form-textarea" placeholder="Ej: No sé dónde está mi margen, trabajo 80h a la semana..." rows="3" required></textarea>
+          </div>
+          <span class="form-error" id="errorMessage"></span>
+        </div>
+
+        <!-- Terms -->
+        <div class="form-group form-check">
+          <label class="checkbox-label" for="fieldTerms">
+            <input type="checkbox" id="fieldTerms" name="terms" class="checkbox-input" required />
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">
+              Acepto los <a href="legal.html" target="_blank" class="terms-link">Términos y Condiciones</a>
+              y la <a href="legal.html" target="_blank" class="terms-link">Política de Privacidad</a> de Inya.
+            </span>
+          </label>
+          <span class="form-error" id="errorTerms"></span>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary btn-full" id="formSubmitBtn">
+          <span class="btn-text" data-i18n="modal_btn">Solicitar Diagnóstico →</span>
+          <span class="btn-loading" style="display:none" data-i18n="modal_btn_loading">⏳ Procesando...</span>
+        </button>
+
+      </form>
+
+      <!-- Success state -->
+      <div class="modal-success" id="modalSuccess" style="display:none">
+        <div class="success-icon">✅</div>
+        <h3 class="success-title">¡Solicitud enviada!</h3>
+        <p class="success-text">
+          Hemos recibido tu solicitud. Te contactaremos en menos de 24 horas
+          al correo y teléfono proporcionados.
+        </p>
+        <button onclick="closeModal()" class="btn btn-outline" style="margin-top:24px">
+          Cerrar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
