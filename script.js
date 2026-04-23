@@ -268,54 +268,60 @@ console.log('%c Powered by Inya Automation ', 'color:#C29E54;font-size:11px;');
    MULTI-LANGUAGE SUPPORT
    ============================================================ */
 function setLang(lang) {
-  // Deactivate all lang buttons (desktop + mobile)
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
+  // Validate lang
+  const VALID = ['es', 'en', 'de', 'pt', 'tr'];
+  if (!VALID.includes(lang)) lang = 'es';
 
-  // Activate desktop button
+  // Deactivate all lang buttons (desktop + mobile)
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+
+  // Activate desktop + mobile buttons
   const desktopBtn = document.getElementById('lang-' + lang);
   if (desktopBtn) desktopBtn.classList.add('active');
-
-  // Activate mobile button
   const mobileBtn = document.getElementById('mob-lang-' + lang);
   if (mobileBtn) mobileBtn.classList.add('active');
 
-  // Apply translations
-  if (typeof translations !== 'undefined' && translations[lang]) {
-    const dict = translations[lang];
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      if (dict[key]) {
-        el.innerHTML = dict[key];
-      }
-    });
+  // Update <html lang> attribute (enables browser auto-translate for unsupported languages)
+  document.documentElement.lang = lang;
+
+  // Guard: wait for translations to be available
+  if (typeof translations === 'undefined' || !translations[lang]) {
+    console.warn('[INYA] translations not ready for:', lang);
+    return;
   }
 
-  try {
-    localStorage.setItem('inya_lang', lang);
-  } catch (e) {}
+  const dict = translations[lang];
+
+  // Apply translations — restore raw innerHTML first if split text modified it
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (!dict[key]) return;
+    // Set innerHTML (handles rich text with <br>, <span class="gradient-text">, etc.)
+    el.innerHTML = dict[key];
+    // Clear any leftover split-text animation state
+    el.style.animation = '';
+  });
+
+  try { localStorage.setItem('inya_lang', lang); } catch (e) {}
 }
 
 (function initLang() {
   let lang = 'es';
   try {
     const saved = localStorage.getItem('inya_lang');
-    if (saved) {
+    if (saved && ['es','en','de','pt','tr'].includes(saved)) {
       lang = saved;
     } else {
       const browserLang = navigator.language.slice(0, 2).toLowerCase();
-      if (['es', 'en', 'de', 'pt'].includes(browserLang)) {
-        lang = browserLang;
-      }
+      if (['es', 'en', 'de', 'pt', 'tr'].includes(browserLang)) lang = browserLang;
     }
   } catch (e) {}
 
-  if (typeof translations !== 'undefined') {
-    // translations.js loaded sync before script.js, safe to call
-    setLang(lang);
+  // Run after DOM is fully ready so split-text hasn't run yet
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setLang(lang));
   } else {
-    window.addEventListener('load', () => setLang(lang));
+    setLang(lang);
   }
 })();
 
@@ -404,14 +410,15 @@ function setLang(lang) {
 })();
 
 /* ── 5. SPLIT TEXT STAGGER on section titles ── */
+// Split text runs once, only on elements that don't already have spans
+// We skip this on section-titles that have data-i18n — setLang handles those
+// Instead we apply a simple fade-up on reveal via CSS
 (function initSplitText() {
-  document.querySelectorAll('.section-title').forEach((el, elIdx) => {
-    // Skip titles that have nested HTML (gradient spans etc.) — animate whole block instead
+  document.querySelectorAll('.section-title:not([data-i18n])').forEach((el, elIdx) => {
     if (el.innerHTML.includes('<')) {
       el.style.animation = `fadeInUp 0.7s cubic-bezier(0.16,1,0.3,1) ${elIdx * 60}ms both`;
       return;
     }
-    // Plain text titles: do word-by-word stagger
     const words = el.textContent.trim().split(/\s+/);
     el.innerHTML = words.map((word, i) =>
       `<span class="word-wrap"><span class="word" style="animation-delay:${i * 90}ms">${word}</span></span>`
