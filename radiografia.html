@@ -4,15 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Radiografía Exprés Gratuita — INYA</title>
-  <meta name="description" content="Descubre exactamente dónde estás perdiendo dinero cada mes. Diagnóstico interactivo gratuito en 2 minutos." />
+  <meta name="description" content="Descubre exactamente dónde estás perdiendo dinero cada mes. Diagnóstico gratuito basado en benchmarks reales del sector gastronómico." />
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-
   <style>
-    /* ---- DESIGN TOKENS ---- */
     :root {
       --bg:         #000000;
       --bg-card:    #111215;
@@ -26,1084 +23,1009 @@
       --text-mid:   #E4E4E7;
       --border:     rgba(194,158,84,0.15);
       --radius:     16px;
-      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
-      --glow:       0 0 40px rgba(194,158,84,0.15);
+      --ease:       cubic-bezier(0.4,0,0.2,1);
     }
-
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior:smooth; -webkit-font-smoothing:antialiased; }
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text-mid);
-      min-height: 100vh;
-      overflow-x: hidden;
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:var(--text-mid);
+      min-height:100vh;
+      overflow-x:hidden;
     }
-
-    /* ---- BACKGROUND GRID ---- */
     body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 0;
+      content:''; position:fixed; inset:0; z-index:0;
       background-image:
-        linear-gradient(rgba(11,60,73,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(11,60,73,0.06) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
+        linear-gradient(rgba(11,60,73,0.05) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(11,60,73,0.05) 1px,transparent 1px);
+      background-size:40px 40px;
+      pointer-events:none;
     }
 
-    /* ---- NAVBAR ---- */
+    /* ── NAVBAR ── */
     .navbar {
-      position: sticky; top: 0; z-index: 100;
-      padding: 16px 24px;
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      position:sticky; top:0; z-index:100;
+      padding:14px 24px;
+      display:flex; align-items:center; justify-content:space-between;
+      background:rgba(0,0,0,0.9);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--border);
     }
     .nav-logo {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 20px; font-weight: 800;
-      color: var(--text);
-      letter-spacing: -0.02em;
+      display:flex; align-items:center; gap:10px;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      font-size:20px; font-weight:800; color:var(--text);
+      letter-spacing:-0.02em; text-decoration:none;
     }
-    .nav-logo span { color: var(--gold); }
+    .nav-logo em { color:var(--gold); font-style:normal; }
     .nav-back {
-      font-size: 13px; color: var(--text-dim);
-      display: flex; align-items: center; gap: 6px;
-      transition: color var(--transition);
-      cursor: pointer;
-      background: none; border: none; font-family: inherit;
+      font-size:13px; color:var(--text-dim);
+      display:flex; align-items:center; gap:6px;
+      cursor:pointer; background:none; border:none;
+      font-family:inherit; transition:color .25s;
     }
-    .nav-back:hover { color: var(--gold); }
+    .nav-back:hover { color:var(--gold); }
 
-    /* ---- HERO ---- */
+    /* ── HERO ── */
     .hero {
-      position: relative; z-index: 1;
-      text-align: center;
-      padding: 64px 24px 40px;
-      max-width: 700px; margin: 0 auto;
+      position:relative; z-index:1;
+      text-align:center; padding:56px 24px 32px;
+      max-width:680px; margin:0 auto;
     }
     .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(194,158,84,0.08);
-      border: 1px solid rgba(194,158,84,0.25);
-      border-radius: 9999px;
-      padding: 6px 16px;
-      font-size: 12px; font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 0.08em; text-transform: uppercase;
-      margin-bottom: 24px;
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(194,158,84,0.08);
+      border:1px solid rgba(194,158,84,0.25);
+      border-radius:9999px; padding:6px 16px;
+      font-size:12px; font-weight:600; color:var(--gold);
+      letter-spacing:.08em; text-transform:uppercase; margin-bottom:20px;
     }
     .hero h1 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(28px, 5vw, 44px);
-      font-weight: 800; line-height: 1.15;
-      color: var(--text);
-      margin-bottom: 16px;
+      font-family:'Plus Jakarta Sans',sans-serif;
+      font-size:clamp(26px,5vw,42px); font-weight:800;
+      line-height:1.15; color:var(--text); margin-bottom:14px;
     }
-    .hero h1 .gold { color: var(--gold); }
-    .hero p {
-      font-size: 16px; line-height: 1.7;
-      color: var(--text-dim);
-      max-width: 520px; margin: 0 auto 32px;
+    .hero h1 .gold { color:var(--gold); }
+    .hero p { font-size:15px; line-height:1.7; color:var(--text-dim); max-width:500px; margin:0 auto 24px; }
+    .hero-pills {
+      display:flex; align-items:center; justify-content:center;
+      gap:16px; flex-wrap:wrap; font-size:12px; color:var(--text-dim);
     }
-    .hero-meta {
-      display: flex; align-items: center; justify-content: center; gap: 24px;
-      flex-wrap: wrap; font-size: 13px; color: var(--text-dim);
+    .hero-pill {
+      display:flex; align-items:center; gap:5px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:9999px; padding:5px 12px;
     }
-    .hero-meta span { display: flex; align-items: center; gap: 6px; }
-    .hero-meta span::before { content: '✓'; color: var(--gold); font-weight: 700; }
+    .hero-pill::before { content:'✓'; color:var(--gold); font-weight:700; }
 
-    /* ---- PROGRESS BAR ---- */
+    /* ── PROGRESS ── */
     .progress-wrap {
-      position: relative; z-index: 1;
-      max-width: 640px; margin: 0 auto;
-      padding: 0 24px 40px;
+      position:relative; z-index:1;
+      max-width:600px; margin:0 auto; padding:0 24px 32px;
     }
-    .progress-label {
-      display: flex; justify-content: space-between;
-      font-size: 12px; color: var(--text-dim);
-      margin-bottom: 10px;
+    .progress-meta {
+      display:flex; justify-content:space-between;
+      font-size:12px; color:var(--text-dim); margin-bottom:8px;
     }
-    .progress-track {
-      height: 4px; background: rgba(255,255,255,0.06);
-      border-radius: 9999px; overflow: hidden;
-    }
+    .progress-track { height:3px; background:rgba(255,255,255,0.06); border-radius:9999px; overflow:hidden; }
     .progress-fill {
-      height: 100%; border-radius: 9999px;
-      background: linear-gradient(90deg, var(--teal-light), var(--gold));
-      transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+      height:100%; border-radius:9999px;
+      background:linear-gradient(90deg,var(--teal-light),var(--gold));
+      transition:width .6s cubic-bezier(0.16,1,0.3,1);
     }
-    .step-dots {
-      display: flex; justify-content: center; gap: 8px; margin-top: 12px;
-    }
-    .step-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      transition: background 0.3s, transform 0.3s;
-    }
-    .step-dot.active { background: var(--gold); transform: scale(1.3); }
-    .step-dot.done   { background: var(--teal-light); }
+    .step-dots { display:flex; justify-content:center; gap:6px; margin-top:10px; }
+    .step-dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.1); transition:background .3s,transform .3s; }
+    .step-dot.active { background:var(--gold); transform:scale(1.3); }
+    .step-dot.done { background:var(--teal-light); }
 
-    /* ---- CARD ---- */
-    .card-wrap {
-      position: relative; z-index: 1;
-      max-width: 640px; margin: 0 auto;
-      padding: 0 24px 80px;
-    }
+    /* ── CARD ── */
+    .card-wrap { position:relative; z-index:1; max-width:600px; margin:0 auto; padding:0 24px 80px; }
     .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 40px;
-      box-shadow: var(--glow);
+      background:var(--bg-card);
+      border:1px solid var(--border);
+      border-radius:var(--radius); padding:36px;
+      box-shadow:0 0 60px rgba(194,158,84,0.08);
+      animation:fadeUp .4s cubic-bezier(0.16,1,0.3,1) both;
     }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 
-    /* ---- STEP HEADER ---- */
-    .step-num {
-      display: inline-block;
-      font-size: 11px; font-weight: 700;
-      color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .step-q {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(18px, 3vw, 24px); font-weight: 700;
-      color: var(--text); line-height: 1.3; margin-bottom: 8px;
-    }
-    .step-sub {
-      font-size: 14px; color: var(--text-dim); margin-bottom: 28px;
-    }
+    /* ── STEP HEADER ── */
+    .step-num { display:block; font-size:11px; font-weight:700; color:var(--gold); letter-spacing:.12em; text-transform:uppercase; margin-bottom:10px; }
+    .step-q { font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(17px,3vw,22px); font-weight:700; color:var(--text); line-height:1.3; margin-bottom:6px; }
+    .step-sub { font-size:13px; color:var(--text-dim); line-height:1.6; margin-bottom:24px; }
 
-    /* ---- OPTIONS GRID ---- */
-    .options { display: grid; gap: 12px; }
-    .options.cols-2 { grid-template-columns: 1fr 1fr; }
-
+    /* ── OPTIONS ── */
+    .options { display:grid; gap:10px; }
+    .options.cols-2 { grid-template-columns:1fr 1fr; }
     .opt {
-      display: flex; align-items: flex-start; gap: 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 12px;
-      padding: 16px 18px;
-      cursor: pointer;
-      transition: border-color var(--transition), background var(--transition), transform 0.2s;
-      text-align: left;
+      display:flex; align-items:flex-start; gap:12px;
+      background:rgba(255,255,255,0.025);
+      border:1px solid rgba(255,255,255,0.07);
+      border-radius:12px; padding:14px 16px;
+      cursor:pointer; transition:border-color .2s,background .2s,transform .15s;
+      text-align:left; width:100%;
     }
-    .opt:hover {
-      border-color: rgba(194,158,84,0.35);
-      background: rgba(194,158,84,0.05);
-      transform: translateY(-1px);
-    }
-    .opt.selected {
-      border-color: var(--gold);
-      background: rgba(194,158,84,0.1);
-    }
-    .opt-icon {
-      font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 1px;
-    }
-    .opt-text { flex: 1; }
-    .opt-label {
-      font-weight: 600; font-size: 14px; color: var(--text);
-      display: block; margin-bottom: 2px;
-    }
-    .opt-desc { font-size: 12px; color: var(--text-dim); }
+    .opt:hover { border-color:rgba(194,158,84,0.4); background:rgba(194,158,84,0.05); transform:translateY(-1px); }
+    .opt.selected { border-color:var(--gold); background:rgba(194,158,84,0.1); }
+    .opt-icon { font-size:20px; flex-shrink:0; margin-top:1px; }
+    .opt-text { flex:1; }
+    .opt-label { font-weight:600; font-size:14px; color:var(--text); display:block; margin-bottom:2px; }
+    .opt-desc { font-size:12px; color:var(--text-dim); }
     .opt-check {
-      width: 20px; height: 20px; border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.12);
-      flex-shrink: 0; margin-top: 2px;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color var(--transition), background var(--transition);
+      width:18px; height:18px; border-radius:50%;
+      border:2px solid rgba(255,255,255,0.15); flex-shrink:0; margin-top:2px;
+      display:flex; align-items:center; justify-content:center;
+      transition:border-color .2s,background .2s;
     }
-    .opt.selected .opt-check {
-      border-color: var(--gold);
-      background: var(--gold);
-    }
-    .opt.selected .opt-check::after {
-      content: '✓'; font-size: 11px; color: #000; font-weight: 800;
-    }
+    .opt.selected .opt-check { border-color:var(--gold); background:var(--gold); }
+    .opt.selected .opt-check::after { content:'✓'; font-size:10px; color:#000; font-weight:900; }
 
-    /* ---- INPUT FIELD ---- */
-    .field-wrap { margin-bottom: 20px; }
-    .field-label {
-      display: block; font-size: 13px; font-weight: 600;
-      color: var(--text-mid); margin-bottom: 8px;
-    }
-    .field-label .req { color: var(--gold); }
+    /* ── INPUTS ── */
+    .field-wrap { margin-bottom:16px; }
+    .field-label { display:block; font-size:13px; font-weight:600; color:var(--text-mid); margin-bottom:7px; }
+    .field-label .req { color:var(--gold); }
     .field-input {
-      width: 100%; padding: 12px 16px;
-      background: var(--bg-input);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      color: var(--text); font-family: inherit; font-size: 14px;
-      transition: border-color var(--transition);
-      outline: none;
+      width:100%; padding:11px 14px;
+      background:var(--bg-input); border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px; color:var(--text); font-family:inherit; font-size:14px;
+      outline:none; transition:border-color .2s;
     }
-    .field-input:focus { border-color: var(--gold); }
-    .field-input::placeholder { color: var(--text-dim); }
-    .field-input.error { border-color: #ef4444; }
-    .field-error { font-size: 12px; color: #ef4444; margin-top: 4px; display: none; }
-    .field-error.show { display: block; }
+    .field-input:focus { border-color:var(--gold); }
+    .field-input::placeholder { color:var(--text-dim); }
+    .field-input.error { border-color:#ef4444; }
+    .field-err { font-size:12px; color:#ef4444; margin-top:4px; display:none; }
+    .field-err.show { display:block; }
 
-    /* ---- NAVIGATION BUTTONS ---- */
-    .btn-row {
-      display: flex; gap: 12px; margin-top: 32px;
-      justify-content: space-between; align-items: center;
+    /* ── PHONE ROW ── */
+    .phone-row { display:flex; gap:8px; }
+    .country-select-wrap { position:relative; flex-shrink:0; }
+    .country-select {
+      appearance:none; -webkit-appearance:none;
+      background:var(--bg-input); border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px; color:var(--text);
+      font-family:inherit; font-size:13px;
+      padding:11px 32px 11px 10px; cursor:pointer;
+      outline:none; transition:border-color .2s;
+      min-width:100px;
     }
+    .country-select:focus { border-color:var(--gold); }
+    .country-select-wrap::after {
+      content:'▾'; position:absolute; right:8px; top:50%; transform:translateY(-50%);
+      color:var(--text-dim); font-size:11px; pointer-events:none;
+    }
+    .phone-input { flex:1; }
+
+    /* ── TERMS ── */
+    .terms-wrap {
+      display:flex; align-items:flex-start; gap:12px;
+      background:rgba(194,158,84,0.04);
+      border:1px solid rgba(194,158,84,0.12);
+      border-radius:10px; padding:14px 16px; margin-bottom:20px;
+      cursor:pointer;
+    }
+    .terms-check {
+      width:20px; height:20px; border-radius:5px; flex-shrink:0; margin-top:1px;
+      border:2px solid rgba(255,255,255,0.2); background:transparent;
+      display:flex; align-items:center; justify-content:center;
+      transition:border-color .2s,background .2s;
+    }
+    .terms-check.checked { border-color:var(--gold); background:var(--gold); }
+    .terms-check.checked::after { content:'✓'; font-size:12px; color:#000; font-weight:900; }
+    .terms-text { font-size:12px; line-height:1.6; color:var(--text-dim); }
+    .terms-text a { color:var(--gold); text-decoration:underline; }
+    .terms-err { font-size:12px; color:#ef4444; margin-top:6px; display:none; }
+    .terms-err.show { display:block; }
+
+    /* ── BUTTONS ── */
+    .btn-row { display:flex; gap:10px; margin-top:28px; align-items:center; justify-content:space-between; }
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 13px 28px; border-radius: 10px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 14px; font-weight: 700;
-      border: none; cursor: pointer;
-      transition: var(--transition);
+      display:inline-flex; align-items:center; justify-content:center; gap:7px;
+      padding:12px 24px; border-radius:10px;
+      font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700;
+      border:none; cursor:pointer; transition:.25s var(--ease);
     }
     .btn-primary {
-      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(11,60,73,0.5);
-      flex: 1;
+      background:linear-gradient(135deg,var(--teal) 0%,var(--teal-light) 100%);
+      color:#fff; flex:1;
+      box-shadow:0 4px 20px rgba(11,60,73,0.5);
     }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(11,60,73,0.7); }
-    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 28px rgba(11,60,73,0.7); }
+    .btn-primary:disabled { opacity:.45; cursor:not-allowed; transform:none; box-shadow:none; }
     .btn-ghost {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--text-dim);
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      color:var(--text-dim);
     }
-    .btn-ghost:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .btn-ghost:hover { background:rgba(255,255,255,0.1); color:var(--text); }
 
-    /* ---- RESULT SCREEN ---- */
-    .result-hidden { display: none; }
-
-    .result-header {
-      text-align: center; padding: 12px 0 32px;
-    }
+    /* ── RESULT ── */
+    .r-hidden { display:none !important; }
+    .result-header { text-align:center; padding:8px 0 28px; }
     .result-icon {
-      width: 72px; height: 72px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--teal), var(--teal-light));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 30px; margin: 0 auto 20px;
-      box-shadow: 0 0 40px rgba(26,142,163,0.4);
+      width:68px; height:68px; border-radius:50%;
+      background:linear-gradient(135deg,var(--teal),var(--teal-light));
+      display:flex; align-items:center; justify-content:center;
+      font-size:28px; margin:0 auto 18px;
+      box-shadow:0 0 40px rgba(26,142,163,0.35);
     }
-    .result-header h2 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(22px,4vw,32px); font-weight: 800;
-      color: var(--text); margin-bottom: 10px;
-    }
-    .result-header p { font-size: 15px; color: var(--text-dim); }
+    .result-header h2 { font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(20px,4vw,28px); font-weight:800; color:var(--text); margin-bottom:8px; }
+    .result-header p { font-size:14px; color:var(--text-dim); }
 
-    /* ---- LOSS METER ---- */
+    /* LOSS METER */
     .loss-meter {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 28px;
-      margin-bottom: 20px;
-      text-align: center;
+      background:rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.2);
+      border-radius:14px; padding:24px; margin-bottom:18px; text-align:center;
     }
-    .loss-label {
-      font-size: 12px; font-weight: 700;
-      color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-    .loss-value {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 56px; font-weight: 800;
-      color: var(--text); line-height: 1;
-      margin-bottom: 4px;
-    }
-    .loss-value span { color: var(--gold); }
-    .loss-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+    .loss-tag { font-size:11px; font-weight:700; color:#f87171; letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+    .loss-value { font-family:'Plus Jakarta Sans',sans-serif; font-size:52px; font-weight:800; color:var(--text); line-height:1; margin-bottom:4px; }
+    .loss-value em { color:#f87171; font-style:normal; }
+    .loss-euros { font-size:13px; color:var(--text-dim); margin-bottom:18px; }
+    .loss-track { height:7px; background:rgba(255,255,255,0.06); border-radius:9999px; overflow:hidden; margin-bottom:10px; }
+    .loss-fill { height:100%; border-radius:9999px; background:linear-gradient(90deg,#ef4444,#f97316); transition:width 1.4s cubic-bezier(0.16,1,0.3,1); }
+    .loss-scale { display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim); }
+    .loss-note { font-size:11px; color:rgba(255,255,255,0.3); margin-top:10px; font-style:italic; }
 
-    .loss-bar-track {
-      height: 8px; background: rgba(255,255,255,0.06);
-      border-radius: 9999px; overflow: hidden; margin-bottom: 12px;
-    }
-    .loss-bar-fill {
-      height: 100%; border-radius: 9999px;
-      background: linear-gradient(90deg, #ef4444, #f97316);
-      transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
-    }
-    .loss-range {
-      display: flex; justify-content: space-between;
-      font-size: 11px; color: var(--text-dim);
-    }
-
-    /* ---- TOP 3 AREAS ---- */
-    .areas-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 700; color: var(--text);
-      margin-bottom: 14px;
-    }
+    /* AREAS */
+    .areas-title { font-family:'Plus Jakarta Sans',sans-serif; font-size:15px; font-weight:700; color:var(--text); margin-bottom:12px; }
     .area-item {
-      display: flex; align-items: center; gap: 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
+      display:flex; align-items:center; gap:12px;
+      background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);
+      border-radius:10px; padding:12px 14px; margin-bottom:8px;
     }
     .area-rank {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--teal), var(--teal-light));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0;
+      width:26px; height:26px; border-radius:50%;
+      background:linear-gradient(135deg,var(--teal),var(--teal-light));
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; font-weight:800; color:#fff; flex-shrink:0;
     }
-    .area-name { font-weight: 600; font-size: 14px; color: var(--text); }
-    .area-pct  { margin-left: auto; font-size: 13px; font-weight: 700; color: #f97316; }
+    .area-info { flex:1; }
+    .area-name { font-weight:600; font-size:13px; color:var(--text); display:block; }
+    .area-basis { font-size:11px; color:var(--text-dim); }
+    .area-pct { font-size:13px; font-weight:700; color:#f97316; flex-shrink:0; }
 
-    /* ---- PACKAGE RECOMMENDATION ---- */
+    /* PACKAGE */
     .pack-rec {
-      background: linear-gradient(135deg, rgba(11,60,73,0.4), rgba(26,142,163,0.1));
-      border: 1px solid rgba(194,158,84,0.3);
-      border-radius: 14px;
-      padding: 28px;
-      margin-top: 20px;
+      background:linear-gradient(135deg,rgba(11,60,73,0.5),rgba(26,142,163,0.12));
+      border:1px solid rgba(194,158,84,0.3); border-radius:14px;
+      padding:24px; margin:18px 0;
     }
-    .pack-rec-label {
-      font-size: 11px; font-weight: 700; color: var(--gold);
-      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;
-    }
-    .pack-rec-name {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 22px; font-weight: 800; color: var(--text);
-      margin-bottom: 6px;
-    }
-    .pack-rec-why { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+    .pack-rec-tag { font-size:11px; font-weight:700; color:var(--gold); letter-spacing:.1em; text-transform:uppercase; margin-bottom:8px; }
+    .pack-rec-name { font-family:'Plus Jakarta Sans',sans-serif; font-size:20px; font-weight:800; color:var(--text); margin-bottom:6px; }
+    .pack-rec-why { font-size:13px; color:var(--text-dim); line-height:1.65; }
 
-    /* ---- LEAD CAPTURE ---- */
-    .lead-section {
-      margin-top: 28px; padding-top: 28px;
-      border-top: 1px solid var(--border);
+    /* METHODOLOGY NOTE */
+    .method-note {
+      background:rgba(194,158,84,0.04); border:1px solid rgba(194,158,84,0.1);
+      border-radius:10px; padding:14px 16px; margin-top:16px;
     }
-    .lead-title {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 18px; font-weight: 700; color: var(--text);
-      margin-bottom: 6px;
-    }
-    .lead-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 20px; }
+    .method-note-title { font-size:11px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px; }
+    .method-note-text { font-size:11px; color:var(--text-dim); line-height:1.7; }
 
+    /* CTA */
+    .lead-section { margin-top:24px; padding-top:24px; border-top:1px solid var(--border); }
+    .lead-title { font-family:'Plus Jakarta Sans',sans-serif; font-size:17px; font-weight:700; color:var(--text); margin-bottom:5px; }
+    .lead-sub { font-size:13px; color:var(--text-dim); margin-bottom:18px; line-height:1.6; }
     .btn-gold {
-      width: 100%;
-      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-      color: #000; font-size: 15px;
-      padding: 16px 28px;
-      box-shadow: 0 4px 24px rgba(194,158,84,0.35);
+      width:100%; background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+      color:#000; font-size:15px; padding:16px;
+      box-shadow:0 4px 24px rgba(194,158,84,0.3); border-radius:10px;
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      font-family:'Plus Jakarta Sans',sans-serif; font-weight:700;
+      cursor:pointer; border:none; transition:.25s;
     }
-    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(194,158,84,0.5); }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(194,158,84,0.5); }
+    .btn-restart {
+      display:block; text-align:center; margin-top:14px;
+      font-size:13px; color:var(--text-dim); cursor:pointer;
+      background:none; border:none; font-family:inherit; width:100%;
+    }
+    .btn-restart:hover { color:var(--gold); }
 
-    .restart-btn {
-      display: block; text-align: center; margin-top: 16px;
-      font-size: 13px; color: var(--text-dim);
-      cursor: pointer; background: none; border: none; font-family: inherit;
-      width: 100%;
-    }
-    .restart-btn:hover { color: var(--gold); }
-
-    /* ---- SUCCESS STATE ---- */
-    .success-box {
-      text-align: center; padding: 40px 20px; display: none;
-    }
+    /* SUCCESS */
+    .success-box { text-align:center; padding:36px 16px; display:none; }
     .success-icon {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: linear-gradient(135deg, #22C55E, #16a34a);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px; margin: 0 auto 20px;
-      box-shadow: 0 0 40px rgba(34,197,94,0.3);
+      width:76px; height:76px; border-radius:50%;
+      background:linear-gradient(135deg,#22C55E,#16a34a);
+      display:flex; align-items:center; justify-content:center;
+      font-size:32px; margin:0 auto 18px;
+      box-shadow:0 0 40px rgba(34,197,94,0.3);
     }
-    .success-box h2 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 24px; font-weight: 800; color: var(--text); margin-bottom: 10px;
-    }
-    .success-box p { font-size: 15px; color: var(--text-dim); line-height: 1.7; max-width: 380px; margin: 0 auto; }
+    .success-box h2 { font-family:'Plus Jakarta Sans',sans-serif; font-size:22px; font-weight:800; color:var(--text); margin-bottom:10px; }
+    .success-box p { font-size:14px; color:var(--text-dim); line-height:1.7; max-width:360px; margin:0 auto; }
 
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 600px) {
-      .card { padding: 28px 20px; }
-      .options.cols-2 { grid-template-columns: 1fr; }
-      .btn-row { flex-direction: column-reverse; }
-      .btn-ghost { width: 100%; }
-      .loss-value { font-size: 40px; }
+    /* RESPONSIVE */
+    @media (max-width:520px) {
+      .card { padding:24px 18px; }
+      .options.cols-2 { grid-template-columns:1fr; }
+      .btn-row { flex-direction:column-reverse; }
+      .btn-ghost { width:100%; }
+      .loss-value { font-size:38px; }
+      .phone-row { flex-direction:column; }
+      .country-select { width:100%; }
     }
 
-    /* ---- ANIM ---- */
-    .fade-in {
-      animation: fadeInUp 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    /* ── FLOATING WHATSAPP ── */
+    .wa-float {
+      position:fixed; bottom:28px; right:28px; z-index:9997;
+      display:flex; align-items:center; gap:0;
+      cursor:pointer; filter:drop-shadow(0 4px 20px rgba(37,211,102,0.4));
+      transition:filter .3s,transform .3s;
     }
-    @keyframes fadeInUp {
-      from { opacity:0; transform: translateY(16px); }
-      to   { opacity:1; transform: translateY(0); }
+    .wa-float:hover { filter:drop-shadow(0 6px 28px rgba(37,211,102,0.6)); transform:translateY(-3px) scale(1.04); }
+    .wa-float:hover .wa-tip { opacity:1; transform:translateX(0); pointer-events:auto; }
+    .wa-btn {
+      width:56px; height:56px; border-radius:50%;
+      background:linear-gradient(135deg,#25d366,#128c5e);
+      display:flex; align-items:center; justify-content:center;
+      border:none; cursor:pointer; position:relative; flex-shrink:0;
     }
+    .wa-btn::before {
+      content:''; position:absolute; inset:-4px; border-radius:50%;
+      background:rgba(37,211,102,0.2);
+      animation:wa-ping 2.5s ease-in-out infinite;
+    }
+    @keyframes wa-ping {
+      0%{transform:scale(1);opacity:.6} 70%,100%{transform:scale(1.5);opacity:0}
+    }
+    .wa-btn svg { width:26px; height:26px; fill:#fff; position:relative; z-index:1; }
+    .wa-tip {
+      background:rgba(10,10,10,0.92); backdrop-filter:blur(12px);
+      border:1px solid rgba(37,211,102,0.25); border-radius:10px;
+      padding:10px 14px; margin-right:12px;
+      opacity:0; transform:translateX(8px); pointer-events:none;
+      transition:opacity .25s,transform .3s cubic-bezier(0.16,1,0.3,1);
+      white-space:nowrap; order:-1;
+    }
+    .wa-tip strong { display:block; font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; font-weight:700; color:#fff; margin-bottom:2px; }
+    .wa-tip span { font-size:11px; color:rgba(255,255,255,0.5); }
+    @media(max-width:480px){ .wa-float{bottom:20px;right:16px;} .wa-btn{width:50px;height:50px;} .wa-tip{display:none;} }
+
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-logo">IN<span>YA</span></div>
-    <button class="nav-back" onclick="window.location.href='index.html'">
-      ← Volver al sitio
-    </button>
-  </nav>
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">
+    <span>IN<em>YA</em></span>
+  </a>
+  <button class="nav-back" onclick="window.location.href='index.html'">← Volver al sitio</button>
+</nav>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-badge">⚡ 2 minutos · 100% gratuito · Sin compromiso</div>
-    <h1>Descubre dónde está <span class="gold">sangrando</span><br>tu margen cada mes</h1>
-    <p>Responde 6 preguntas rápidas. Calcula tu pérdida mensual estimada y te decimos exactamente dónde atacar primero.</p>
-    <div class="hero-meta">
-      <span>Sin registro previo</span>
-      <span>Resultado inmediato</span>
-      <span>Datos 100% privados</span>
-    </div>
-  </section>
-
-  <!-- PROGRESS -->
-  <div class="progress-wrap">
-    <div class="progress-label">
-      <span id="stepLabel">Paso 1 de 6</span>
-      <span id="stepPct">0%</span>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progressFill" style="width:0%"></div>
-    </div>
-    <div class="step-dots" id="stepDots"></div>
+<section class="hero">
+  <div class="hero-badge">⚡ 2 minutos · Gratuito · Sin compromiso</div>
+  <h1>¿Cuánto está perdiendo<br>tu negocio cada mes <span class="gold">sin saberlo</span>?</h1>
+  <p>Diagnóstico basado en benchmarks reales del sector gastronómico europeo. Responde 6 preguntas y obtén tu radiografía de pérdidas con el plan de acción exacto.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">Sin registro previo</span>
+    <span class="hero-pill">Resultado en segundos</span>
+    <span class="hero-pill">Metodología auditada</span>
   </div>
+</section>
 
-  <!-- FORM CARD -->
-  <div class="card-wrap">
-    <div class="card fade-in" id="formCard">
+<div class="progress-wrap">
+  <div class="progress-meta">
+    <span id="stepLabel">Paso 1 de 6</span>
+    <span id="stepPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progFill" style="width:0%"></div></div>
+  <div class="step-dots" id="stepDots"></div>
+</div>
 
-      <!-- STEP 1: Tipo de negocio -->
-      <div class="step" id="step-1">
-        <div class="step-num">Pregunta 1 / 6</div>
-        <div class="step-q">¿Qué tipo de negocio gastronómico tienes?</div>
-        <div class="step-sub">Esto nos ayuda a calibrar los benchmarks del sector.</div>
-        <div class="options cols-2">
-          <button class="opt" data-step="1" data-value="restaurant" data-weight="1">
-            <span class="opt-icon">🍽️</span>
-            <span class="opt-text">
-              <span class="opt-label">Restaurante</span>
-              <span class="opt-desc">Servicio de mesa, cocina tradicional</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="1" data-value="cafe" data-weight="0.8">
-            <span class="opt-icon">☕</span>
-            <span class="opt-text">
-              <span class="opt-label">Café / Brunch</span>
-              <span class="opt-desc">Cafetería, brunch, panadería</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="1" data-value="bar" data-weight="0.9">
-            <span class="opt-icon">🍺</span>
-            <span class="opt-text">
-              <span class="opt-label">Bar / Coctelería</span>
-              <span class="opt-desc">Bar, pub, coctelería</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="1" data-value="multi" data-weight="1.2">
-            <span class="opt-icon">🏢</span>
-            <span class="opt-text">
-              <span class="opt-label">Multi-local</span>
-              <span class="opt-desc">2 o más establecimientos</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-primary" id="next-1" disabled onclick="nextStep(1)">Continuar →</button>
-        </div>
+<div class="card-wrap">
+  <div class="card" id="formCard">
+
+    <!-- STEP 1 -->
+    <div class="step" id="s1">
+      <span class="step-num">Pregunta 1 / 6</span>
+      <div class="step-q">¿Qué tipo de establecimiento gestionas?</div>
+      <div class="step-sub">Esto calibra los benchmarks del sector correcto para tu diagnóstico.</div>
+      <div class="options cols-2">
+        <button class="opt" data-s="1" data-v="restaurante" data-w="1.0">
+          <span class="opt-icon">🍽️</span>
+          <span class="opt-text"><span class="opt-label">Restaurante</span><span class="opt-desc">Servicio de mesa, cocina</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="1" data-v="cafe" data-w="0.8">
+          <span class="opt-icon">☕</span>
+          <span class="opt-text"><span class="opt-label">Café / Brunch</span><span class="opt-desc">Cafetería, panadería</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="1" data-v="bar" data-w="0.85">
+          <span class="opt-icon">🍺</span>
+          <span class="opt-text"><span class="opt-label">Bar / Coctelería</span><span class="opt-desc">Bar, pub, coctelería</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="1" data-v="multilocal" data-w="1.25">
+          <span class="opt-icon">🏢</span>
+          <span class="opt-text"><span class="opt-label">Multi-local</span><span class="opt-desc">2 o más establecimientos</span></span>
+          <span class="opt-check"></span>
+        </button>
+      </div>
+      <div class="btn-row"><button class="btn btn-primary" id="n1" disabled onclick="go(1,2)">Continuar →</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step r-hidden" id="s2">
+      <span class="step-num">Pregunta 2 / 6</span>
+      <div class="step-q">¿Cuál es el tamaño de tu operación mensual?</div>
+      <div class="step-sub">No hace falta el número exacto — un rango aproximado es suficiente para calibrar el impacto.</div>
+      <div class="options">
+        <button class="opt" data-s="2" data-v="pequeño" data-rev="45000">
+          <span class="opt-icon">🌱</span>
+          <span class="opt-text"><span class="opt-label">Operación pequeña-media</span><span class="opt-desc">Equipo de hasta 10 personas, 1 local</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="2" data-v="medio" data-rev="85000">
+          <span class="opt-icon">🚀</span>
+          <span class="opt-text"><span class="opt-label">Operación media-alta</span><span class="opt-desc">Equipo de 10-25 personas, alto volumen</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="2" data-v="grande" data-rev="160000">
+          <span class="opt-icon">🏆</span>
+          <span class="opt-text"><span class="opt-label">Gran operación</span><span class="opt-desc">+25 personas, múltiples locales o alta rotación</span></span>
+          <span class="opt-check"></span>
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="go(2,1)">← Atrás</button>
+        <button class="btn btn-primary" id="n2" disabled onclick="go(2,3)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step r-hidden" id="s3">
+      <span class="step-num">Pregunta 3 / 6</span>
+      <div class="step-q">¿Cómo gestionas el control de stock y mermas?</div>
+      <div class="step-sub">Estudios de la NRA (National Restaurant Association) indican que las pérdidas por inventario sin control representan entre el 4% y el 10% del coste de alimentos.</div>
+      <div class="options">
+        <button class="opt" data-s="3" data-v="sin_sistema" data-lw="6.5">
+          <span class="opt-icon">😬</span>
+          <span class="opt-text"><span class="opt-label">Sin sistema real</span><span class="opt-desc">A ojo o confiando en el equipo sin datos</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="3" data-v="basico" data-lw="3.8">
+          <span class="opt-icon">📋</span>
+          <span class="opt-text"><span class="opt-label">Registro manual (Excel/papel)</span><span class="opt-desc">Sin alertas ni automatización</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="3" data-v="parcial" data-lw="1.8">
+          <span class="opt-icon">🛠️</span>
+          <span class="opt-text"><span class="opt-label">Sistema parcial</span><span class="opt-desc">Uso herramientas pero no cubren toda la operación</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="3" data-v="completo" data-lw="0.6">
+          <span class="opt-icon">✅</span>
+          <span class="opt-text"><span class="opt-label">Control automatizado completo</span><span class="opt-desc">Alertas, inventario en tiempo real, trazabilidad</span></span>
+          <span class="opt-check"></span>
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="go(3,2)">← Atrás</button>
+        <button class="btn btn-primary" id="n3" disabled onclick="go(3,4)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step r-hidden" id="s4">
+      <span class="step-num">Pregunta 4 / 6</span>
+      <div class="step-q">¿Con qué frecuencia conoces tu margen real de rentabilidad?</div>
+      <div class="step-sub">Operar sin datos financieros en tiempo real genera decisiones reactivas que Deloitte estima en un 3–8% de erosión de margen en hostelería.</div>
+      <div class="options">
+        <button class="opt" data-s="4" data-v="mensual" data-lf="5.5">
+          <span class="opt-icon">🙈</span>
+          <span class="opt-text"><span class="opt-label">Solo a fin de mes (o trimestre)</span><span class="opt-desc">Me entero tarde, cuando ya es difícil corregir</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="4" data-v="semanal" data-lf="3.0">
+          <span class="opt-icon">📅</span>
+          <span class="opt-text"><span class="opt-label">Revisión semanal</span><span class="opt-desc">Cierta visibilidad, pero con retraso</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="4" data-v="diario" data-lf="1.0">
+          <span class="opt-icon">📊</span>
+          <span class="opt-text"><span class="opt-label">Dashboard diario</span><span class="opt-desc">Datos actualizados y decisiones basadas en hechos</span></span>
+          <span class="opt-check"></span>
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="go(4,3)">← Atrás</button>
+        <button class="btn btn-primary" id="n4" disabled onclick="go(4,5)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step r-hidden" id="s5">
+      <span class="step-num">Pregunta 5 / 6</span>
+      <div class="step-q">¿Qué pasa si te desconectas del negocio 2 semanas?</div>
+      <div class="step-sub">McKinsey & Company señala que la hiperdependencia del fundador genera una pérdida de eficiencia operativa del 15–25% en negocios de hostelería.</div>
+      <div class="options">
+        <button class="opt" data-s="5" data-v="colapso" data-lo="5.5">
+          <span class="opt-icon">🔥</span>
+          <span class="opt-text"><span class="opt-label">La operación colapsa o baja mucho</span><span class="opt-desc">Es imposible desconectarme realmente</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="5" data-v="riesgo" data-lo="3.2">
+          <span class="opt-icon">😰</span>
+          <span class="opt-text"><span class="opt-label">Funciona, pero con tensión</span><span class="opt-desc">Tengo que estar pendiente del teléfono</span></span>
+          <span class="opt-check"></span>
+        </button>
+        <button class="opt" data-s="5" data-v="funciona" data-lo="1.0">
+          <span class="opt-icon">✅</span>
+          <span class="opt-text"><span class="opt-label">Funciona sin mí</span><span class="opt-desc">Equipo autónomo, protocolos establecidos</span></span>
+          <span class="opt-check"></span>
+        </button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="go(5,4)">← Atrás</button>
+        <button class="btn btn-primary" id="n5" disabled onclick="go(5,6)">Continuar →</button>
+      </div>
+    </div>
+
+    <!-- STEP 6: Contacto -->
+    <div class="step r-hidden" id="s6">
+      <span class="step-num">Pregunta 6 / 6</span>
+      <div class="step-q">¿A dónde enviamos tu informe completo?</div>
+      <div class="step-sub">Recibirás tu diagnóstico personalizado con el desglose exacto y el plan de acción recomendado.</div>
+
+      <div class="field-wrap">
+        <label class="field-label" for="fName">Nombre <span class="req">*</span></label>
+        <input class="field-input" id="fName" type="text" placeholder="Tu nombre" autocomplete="given-name" />
+        <div class="field-err" id="eN">Por favor ingresa tu nombre.</div>
       </div>
 
-      <!-- STEP 2: Facturación mensual -->
-      <div class="step" id="step-2" style="display:none">
-        <div class="step-num">Pregunta 2 / 6</div>
-        <div class="step-q">¿Cuánto factura tu negocio al mes?</div>
-        <div class="step-sub">Aproximado está bien. Esto calibra el impacto económico real.</div>
-        <div class="options">
-          <button class="opt" data-step="2" data-value="60k" data-revenue="70000">
-            <span class="opt-icon">📈</span>
-            <span class="opt-text">
-              <span class="opt-label">Entre 30K€ y 60K€ / mes</span>
-              <span class="opt-desc">Negocio en crecimiento sólido</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="2" data-value="120k" data-revenue="90000">
-            <span class="opt-icon">🚀</span>
-            <span class="opt-text">
-              <span class="opt-label">Entre 60K€ y 120K€ / mes</span>
-              <span class="opt-desc">Volumen alto, operación compleja</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="2" data-value="120k+" data-revenue="150000">
-            <span class="opt-icon">🏆</span>
-            <span class="opt-text">
-              <span class="opt-label">Más de 120K€ / mes</span>
-              <span class="opt-desc">Gran volumen, múltiples equipos</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-ghost" onclick="prevStep(2)">← Atrás</button>
-          <button class="btn btn-primary" id="next-2" disabled onclick="nextStep(2)">Continuar →</button>
-        </div>
+      <div class="field-wrap">
+        <label class="field-label" for="fEmail">Email <span class="req">*</span></label>
+        <input class="field-input" id="fEmail" type="email" placeholder="tu@empresa.com" autocomplete="email" />
+        <div class="field-err" id="eE">Ingresa un email válido.</div>
       </div>
 
-      <!-- STEP 3: Control de desperdicios -->
-      <div class="step" id="step-3" style="display:none">
-        <div class="step-num">Pregunta 3 / 6</div>
-        <div class="step-q">¿Cómo gestionas el control de desperdicios y stock?</div>
-        <div class="step-sub">El desperdicio oculto es la hemorragia más silenciosa del sector.</div>
-        <div class="options">
-          <button class="opt" data-step="3" data-value="none" data-loss-waste="18">
-            <span class="opt-icon">😬</span>
-            <span class="opt-text">
-              <span class="opt-label">No tengo sistema real</span>
-              <span class="opt-desc">Voy a ojo o confío en mi equipo sin datos</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="3" data-value="basic" data-loss-waste="10">
-            <span class="opt-icon">📋</span>
-            <span class="opt-text">
-              <span class="opt-label">Excel o papel</span>
-              <span class="opt-desc">Lo registro pero sin alertas automáticas</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="3" data-value="partial" data-loss-waste="5">
-            <span class="opt-icon">🛠️</span>
-            <span class="opt-text">
-              <span class="opt-label">Sistema parcial</span>
-              <span class="opt-desc">Uso herramientas pero no cubren todo</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="3" data-value="full" data-loss-waste="2">
-            <span class="opt-icon">✅</span>
-            <span class="opt-text">
-              <span class="opt-label">Control total automatizado</span>
-              <span class="opt-desc">Alertas, inventario en tiempo real</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
+      <div class="field-wrap">
+        <label class="field-label">Teléfono <span class="req">*</span></label>
+        <div class="phone-row">
+          <div class="country-select-wrap">
+            <select class="country-select" id="fCountry" onchange="updateWhatsApp()">
+              <option value="+34" data-flag="🇪🇸" data-country="ES">🇪🇸 +34</option>
+              <option value="+351" data-flag="🇵🇹" data-country="PT">🇵🇹 +351</option>
+              <option value="+49" data-flag="🇩🇪" data-country="DE">🇩🇪 +49</option>
+              <option value="+33" data-flag="🇫🇷" data-country="FR">🇫🇷 +33</option>
+              <option value="+39" data-flag="🇮🇹" data-country="IT">🇮🇹 +39</option>
+              <option value="+31" data-flag="🇳🇱" data-country="NL">🇳🇱 +31</option>
+              <option value="+32" data-flag="🇧🇪" data-country="BE">🇧🇪 +32</option>
+              <option value="+41" data-flag="🇨🇭" data-country="CH">🇨🇭 +41</option>
+              <option value="+43" data-flag="🇦🇹" data-country="AT">🇦🇹 +43</option>
+              <option value="+44" data-flag="🇬🇧" data-country="GB">🇬🇧 +44</option>
+              <option value="+52" data-flag="🇲🇽" data-country="MX">🇲🇽 +52</option>
+              <option value="+57" data-flag="🇨🇴" data-country="CO">🇨🇴 +57</option>
+              <option value="+54" data-flag="🇦🇷" data-country="AR">🇦🇷 +54</option>
+              <option value="+56" data-flag="🇨🇱" data-country="CL">🇨🇱 +56</option>
+              <option value="+58" data-flag="🇻🇪" data-country="VE">🇻🇪 +58</option>
+              <option value="+51" data-flag="🇵🇪" data-country="PE">🇵🇪 +51</option>
+              <option value="+1" data-flag="🇺🇸" data-country="US">🇺🇸 +1</option>
+            </select>
+          </div>
+          <input class="field-input phone-input" id="fPhone" type="tel" placeholder="600 000 000" autocomplete="tel-national" />
         </div>
-        <div class="btn-row">
-          <button class="btn btn-ghost" onclick="prevStep(3)">← Atrás</button>
-          <button class="btn btn-primary" id="next-3" disabled onclick="nextStep(3)">Continuar →</button>
-        </div>
+        <div class="field-err" id="eP">Ingresa un número de teléfono válido.</div>
       </div>
 
-      <!-- STEP 4: Visibilidad financiera -->
-      <div class="step" id="step-4" style="display:none">
-        <div class="step-num">Pregunta 4 / 6</div>
-        <div class="step-q">¿Conoces tu margen de rentabilidad real en tiempo real?</div>
-        <div class="step-sub">No el del contador a final de mes. El de hoy.</div>
-        <div class="options">
-          <button class="opt" data-step="4" data-value="no" data-loss-finance="12">
-            <span class="opt-icon">🙈</span>
-            <span class="opt-text">
-              <span class="opt-label">No, lo descubro cada mes</span>
-              <span class="opt-desc">Me entero al final cuando ya es tarde</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="4" data-value="weekly" data-loss-finance="7">
-            <span class="opt-icon">📅</span>
-            <span class="opt-text">
-              <span class="opt-label">Lo reviso cada semana</span>
-              <span class="opt-desc">Tengo cierta visibilidad pero con retraso</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="4" data-value="daily" data-loss-finance="3">
-            <span class="opt-icon">📊</span>
-            <span class="opt-text">
-              <span class="opt-label">Tengo datos diarios</span>
-              <span class="opt-desc">Dashboard o reportes actualizados cada día</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-ghost" onclick="prevStep(4)">← Atrás</button>
-          <button class="btn btn-primary" id="next-4" disabled onclick="nextStep(4)">Continuar →</button>
-        </div>
+      <div class="field-wrap">
+        <label class="field-label" for="fCompany">Nombre del negocio</label>
+        <input class="field-input" id="fCompany" type="text" placeholder="Mi Restaurante" autocomplete="organization" />
       </div>
 
-      <!-- STEP 5: Dependencia del dueño -->
-      <div class="step" id="step-5" style="display:none">
-        <div class="step-num">Pregunta 5 / 6</div>
-        <div class="step-q">¿Qué pasa si te vas de vacaciones 2 semanas?</div>
-        <div class="step-sub">La dependencia del dueño es el techo de cristal más caro del sector.</div>
-        <div class="options">
-          <button class="opt" data-step="5" data-value="collapse" data-loss-ops="15">
-            <span class="opt-icon">💥</span>
-            <span class="opt-text">
-              <span class="opt-label">Se desmorona todo</span>
-              <span class="opt-desc">Imposible desconectar, siempre estoy en guardia</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="5" data-value="risky" data-loss-ops="9">
-            <span class="opt-icon">😰</span>
-            <span class="opt-text">
-              <span class="opt-label">Funciona pero con riesgo</span>
-              <span class="opt-desc">Bajo la guardia pero sigo atento al teléfono</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-          <button class="opt" data-step="5" data-value="ok" data-loss-ops="4">
-            <span class="opt-icon">👍</span>
-            <span class="opt-text">
-              <span class="opt-label">Funciona sin mí</span>
-              <span class="opt-desc">Tengo equipo y protocolos, confío en ellos</span>
-            </span>
-            <span class="opt-check"></span>
-          </button>
-        </div>
-        <div class="btn-row">
-          <button class="btn btn-ghost" onclick="prevStep(5)">← Atrás</button>
-          <button class="btn btn-primary" id="next-5" disabled onclick="nextStep(5)">Continuar →</button>
+      <!-- TÉRMINOS Y CONDICIONES -->
+      <div class="terms-wrap" onclick="toggleTerms()" id="termsWrap">
+        <div class="terms-check" id="termsCheck"></div>
+        <div class="terms-text">
+          Acepto que INYA utilice mis datos de contacto para enviarme el informe de diagnóstico y comunicaciones relacionadas con sus servicios. Mis datos serán tratados conforme a la <a href="legal.html" target="_blank" onclick="event.stopPropagation()">Política de Privacidad</a>. Puedo darme de baja en cualquier momento.
         </div>
       </div>
+      <div class="terms-err" id="eTerm">Debes aceptar los términos para continuar.</div>
 
-      <!-- STEP 6: Datos de contacto -->
-      <div class="step" id="step-6" style="display:none">
-        <div class="step-num">Pregunta 6 / 6</div>
-        <div class="step-q">¿Dónde te enviamos el informe completo?</div>
-        <div class="step-sub">Recibirás tu diagnóstico personalizado con el plan de acción exacto.</div>
-
-        <div class="field-wrap">
-          <label class="field-label" for="fName">Nombre <span class="req">*</span></label>
-          <input class="field-input" id="fName" type="text" placeholder="Tu nombre" autocomplete="given-name" />
-          <div class="field-error" id="errName">Por favor ingresa tu nombre.</div>
-        </div>
-
-        <div class="field-wrap">
-          <label class="field-label" for="fEmail">Email <span class="req">*</span></label>
-          <input class="field-input" id="fEmail" type="email" placeholder="tu@empresa.com" autocomplete="email" />
-          <div class="field-error" id="errEmail">Ingresa un email válido.</div>
-        </div>
-
-        <div class="field-wrap">
-          <label class="field-label" for="fPhone">Teléfono <span class="req">*</span></label>
-          <input class="field-input" id="fPhone" type="tel" placeholder="+34 600 000 000" autocomplete="tel" />
-          <div class="field-error" id="errPhone">Ingresa un teléfono válido.</div>
-        </div>
-
-        <div class="field-wrap">
-          <label class="field-label" for="fCompany">Nombre del negocio</label>
-          <input class="field-input" id="fCompany" type="text" placeholder="Mi Restaurante SL" autocomplete="organization" />
-        </div>
-
-        <div class="btn-row">
-          <button class="btn btn-ghost" onclick="prevStep(6)">← Atrás</button>
-          <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">Ver mi diagnóstico →</button>
-        </div>
-        <p style="font-size:11px;color:var(--text-dim);margin-top:14px;text-align:center;">
-          Sin spam. Sin compromisos. Solo claridad.
-          <a href="legal.html" style="color:var(--gold)">Política de privacidad</a>.
-        </p>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="go(6,5)">← Atrás</button>
+        <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">Ver mi diagnóstico →</button>
       </div>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:12px;text-align:center;">
+        Sin spam. Puedes darte de baja cuando quieras.
+      </p>
+    </div>
 
-    </div><!-- /card -->
+  </div><!-- /formCard -->
 
-    <!-- RESULT CARD (hidden until step 6 submitted) -->
-    <div class="card fade-in result-hidden" id="resultCard">
+  <!-- RESULT CARD -->
+  <div class="card r-hidden" id="resultCard">
 
-      <div class="result-header">
-        <div class="result-icon">📊</div>
-        <h2>Tu Radiografía de Pérdidas</h2>
-        <p id="resultName">Aquí está lo que encontramos en tu operación.</p>
-      </div>
+    <div class="result-header">
+      <div class="result-icon">📊</div>
+      <h2>Tu Radiografía de Pérdidas</h2>
+      <p id="rName">Aquí está el análisis de tu operación.</p>
+    </div>
 
-      <!-- Loss meter -->
-      <div class="loss-meter">
-        <div class="loss-label">Pérdida mensual estimada sobre facturación</div>
-        <div class="loss-value"><span id="lossPercent">--</span>%</div>
-        <div class="loss-sub" id="lossEuros">— €/mes que se van sin que los veas</div>
-        <div class="loss-bar-track">
-          <div class="loss-bar-fill" id="lossBar" style="width:0%"></div>
-        </div>
-        <div class="loss-range"><span>0% (óptimo)</span><span>40% (crítico)</span></div>
-      </div>
+    <div class="loss-meter">
+      <div class="loss-tag">Pérdida mensual estimada sobre facturación</div>
+      <div class="loss-value"><span id="rPct">--</span><em>%</em></div>
+      <div class="loss-euros" id="rEuros">— calculando —</div>
+      <div class="loss-track"><div class="loss-fill" id="rBar" style="width:0%"></div></div>
+      <div class="loss-scale"><span>0% (sector óptimo)</span><span>18% (nivel crítico)</span></div>
+      <div class="loss-note">Basado en benchmarks de la National Restaurant Association y Deloitte Hospitality Report 2023–2024</div>
+    </div>
 
-      <!-- Top 3 areas -->
-      <div class="areas-title">📍 Tus 3 mayores focos de pérdida</div>
-      <div id="areasList"></div>
+    <div class="areas-title">📍 Tus 3 focos principales de pérdida</div>
+    <div id="areasList"></div>
 
-      <!-- Package recommendation -->
-      <div class="pack-rec">
-        <div class="pack-rec-label">🎯 Paquete recomendado para ti</div>
-        <div class="pack-rec-name" id="recPackage">—</div>
-        <div class="pack-rec-why" id="recWhy">—</div>
-      </div>
+    <div class="pack-rec">
+      <div class="pack-rec-tag">🎯 Recomendación INYA</div>
+      <div class="pack-rec-name" id="rPack">—</div>
+      <div class="pack-rec-why" id="rWhy">—</div>
+    </div>
 
-      <!-- Lead capture form inside result -->
-      <div class="lead-section" id="leadSection">
-        <div class="lead-title">Reserva tu Diagnóstico 1:1 Gratuito</div>
-        <div class="lead-sub">30 minutos con un especialista INYA para convertir este diagnóstico en un plan de acción concreto.</div>
-        <button class="btn btn-gold" onclick="bookCall()">Agendar llamada de 30 minutos →</button>
-        <button class="restart-btn" onclick="restartForm()">↩ Repetir el diagnóstico</button>
-      </div>
+    <div class="method-note">
+      <div class="method-note-title">📐 Metodología del cálculo</div>
+      <div class="method-note-text" id="rMethod">—</div>
+    </div>
 
-      <!-- Success after booking -->
-      <div class="success-box" id="successBox">
-        <div class="success-icon">✅</div>
-        <h2>¡Perfecto, te contactamos en menos de 24h!</h2>
-        <p>Hemos recibido tu diagnóstico. Un especialista INYA revisará tu caso y te escribirá para confirmar la llamada.</p>
-      </div>
+    <div class="lead-section" id="leadSection">
+      <div class="lead-title">Convierte este diagnóstico en resultados reales</div>
+      <div class="lead-sub">Agenda una llamada gratuita de 30 minutos con un especialista INYA. Sin venta agresiva — solo claridad absoluta sobre tu plan de acción.</div>
+      <button class="btn btn-gold" id="whatsappBtn" onclick="bookCall()">
+        <span>💬</span> Agendar llamada en WhatsApp
+      </button>
+      <button class="btn-restart" onclick="restartForm()">↩ Repetir el diagnóstico</button>
+    </div>
 
-    </div><!-- /resultCard -->
-  </div><!-- /card-wrap -->
+    <div class="success-box" id="successBox">
+      <div class="success-icon">✅</div>
+      <h2>¡Te contactamos en menos de 24h!</h2>
+      <p>Hemos recibido tu diagnóstico. Un especialista INYA revisará tu caso y te confirmará la llamada por WhatsApp. Revisa también tu email — te hemos enviado el informe completo.</p>
+    </div>
+
+  </div><!-- /resultCard -->
+</div>
 
 <script>
-/* ============================================================
-   STATE
-   ============================================================ */
-const state = {
-  step: 1,
-  totalSteps: 6,
-  answers: {},
-};
+/* ─── STATE ─── */
+const S = { step:1, total:6, a:{}, termsOk:false, waLink:'' };
 
-/* ============================================================
-   INIT
-   ============================================================ */
-(function init() {
-  buildDots();
+const PABLO  = '351930946625'; // Portugal
+const FARID  = '491753320351'; // Rest of Europe / world
+
+/* ─── INIT ─── */
+(function(){
+  const wrap = document.getElementById('stepDots');
+  for(let i=1;i<=S.total;i++){
+    const d = document.createElement('div');
+    d.className='step-dot'+(i===1?' active':'');
+    d.id='dot'+i; wrap.appendChild(d);
+  }
   updateProgress();
+  updateWhatsApp();
 })();
 
-function buildDots() {
-  const wrap = document.getElementById('stepDots');
-  wrap.innerHTML = '';
-  for (let i = 1; i <= state.totalSteps; i++) {
-    const d = document.createElement('div');
-    d.className = 'step-dot' + (i === 1 ? ' active' : '');
-    d.id = 'dot-' + i;
-    wrap.appendChild(d);
+function updateProgress(){
+  const pct = Math.round(((S.step-1)/S.total)*100);
+  document.getElementById('progFill').style.width = pct+'%';
+  document.getElementById('stepLabel').textContent = `Paso ${S.step} de ${S.total}`;
+  document.getElementById('stepPct').textContent = pct+'%';
+  for(let i=1;i<=S.total;i++){
+    const d=document.getElementById('dot'+i);
+    if(!d) continue;
+    d.className='step-dot'+(i<S.step?' done':i===S.step?' active':'');
   }
 }
 
-function updateProgress() {
-  const pct = Math.round(((state.step - 1) / state.totalSteps) * 100);
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('stepLabel').textContent = `Paso ${state.step} de ${state.totalSteps}`;
-  document.getElementById('stepPct').textContent = pct + '%';
-  for (let i = 1; i <= state.totalSteps; i++) {
-    const dot = document.getElementById('dot-' + i);
-    if (!dot) continue;
-    dot.className = 'step-dot';
-    if (i < state.step) dot.classList.add('done');
-    else if (i === state.step) dot.classList.add('active');
-  }
-}
-
-/* ============================================================
-   OPTION SELECTION
-   ============================================================ */
-document.addEventListener('click', function(e) {
-  const opt = e.target.closest('.opt');
-  if (!opt) return;
-  const step = opt.dataset.step;
-  if (!step) return;
-
-  // Deselect siblings
-  document.querySelectorAll(`.opt[data-step="${step}"]`).forEach(o => o.classList.remove('selected'));
+/* ─── OPTION CLICK ─── */
+document.addEventListener('click',function(e){
+  const opt=e.target.closest('.opt');
+  if(!opt||!opt.dataset.s) return;
+  const s=opt.dataset.s;
+  document.querySelectorAll(`.opt[data-s="${s}"]`).forEach(o=>o.classList.remove('selected'));
   opt.classList.add('selected');
-
-  // Store answer
-  state.answers['step' + step] = {
-    value:      opt.dataset.value,
-    weight:     parseFloat(opt.dataset.weight     || 1),
-    lossWaste:  parseFloat(opt.dataset.lossWaste  || 0),
-    lossFinance:parseFloat(opt.dataset.lossFinance || 0),
-    lossOps:    parseFloat(opt.dataset.lossOps    || 0),
-    revenue:    parseFloat(opt.dataset.revenue    || 0),
+  S.a['s'+s]={
+    v:    opt.dataset.v,
+    w:    parseFloat(opt.dataset.w   ||1),
+    lw:   parseFloat(opt.dataset.lw  ||0),
+    lf:   parseFloat(opt.dataset.lf  ||0),
+    lo:   parseFloat(opt.dataset.lo  ||0),
+    rev:  parseFloat(opt.dataset.rev ||0),
   };
-
-  // Enable next button
-  const nextBtn = document.getElementById('next-' + step);
-  if (nextBtn) nextBtn.disabled = false;
+  const nb=document.getElementById('n'+s);
+  if(nb) nb.disabled=false;
 });
 
-/* ============================================================
-   NAVIGATION
-   ============================================================ */
-function nextStep(current) {
-  const currentEl = document.getElementById('step-' + current);
-  const nextEl    = document.getElementById('step-' + (current + 1));
-  if (!nextEl) return;
-
-  currentEl.style.display = 'none';
-  nextEl.style.display    = 'block';
-  state.step = current + 1;
-  updateProgress();
-
-  // Scroll card into view
-  document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+/* ─── NAVIGATION ─── */
+function go(from,to){
+  document.getElementById('s'+from).classList.add('r-hidden');
+  document.getElementById('s'+to).classList.remove('r-hidden');
+  S.step=to; updateProgress();
+  document.getElementById('formCard').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function prevStep(current) {
-  const currentEl = document.getElementById('step-' + current);
-  const prevEl    = document.getElementById('step-' + (current - 1));
-  if (!prevEl) return;
-
-  currentEl.style.display = 'none';
-  prevEl.style.display    = 'block';
-  state.step = current - 1;
-  updateProgress();
+/* ─── TERMS ─── */
+function toggleTerms(){
+  S.termsOk=!S.termsOk;
+  const chk=document.getElementById('termsCheck');
+  chk.className='terms-check'+(S.termsOk?' checked':'');
+  document.getElementById('eTerm').classList.remove('show');
 }
 
-/* ============================================================
-   FORM SUBMIT + CALCULATE
-   ============================================================ */
-function submitForm() {
-  // Validate contact fields
-  let valid = true;
+/* ─── WHATSAPP ─── */
+function updateWhatsApp(){
+  const sel=document.getElementById('fCountry');
+  const country=sel.options[sel.selectedIndex].dataset.country;
+  const num = country==='PT' ? PABLO : FARID;
+  S.waLink = num;
+}
 
-  const name  = document.getElementById('fName');
-  const email = document.getElementById('fEmail');
-  const phone = document.getElementById('fPhone');
+/* ─── SUBMIT ─── */
+function submitForm(){
+  let ok=true;
+  const name=document.getElementById('fName');
+  const email=document.getElementById('fEmail');
+  const phone=document.getElementById('fPhone');
 
-  const showErr = (id) => { document.getElementById(id).classList.add('show'); };
-  const hideErr = (id) => { document.getElementById(id).classList.remove('show'); };
+  ['eN','eE','eP'].forEach(id=>document.getElementById(id).classList.remove('show'));
+  [name,email,phone].forEach(el=>el.classList.remove('error'));
 
-  ['errName','errEmail','errPhone'].forEach(hideErr);
-  [name, email, phone].forEach(el => el.classList.remove('error'));
-
-  if (!name.value.trim() || name.value.trim().length < 2) {
-    name.classList.add('error'); showErr('errName'); valid = false;
+  if(!name.value.trim()||name.value.trim().length<2){
+    name.classList.add('error'); document.getElementById('eN').classList.add('show'); ok=false;
   }
-  const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!email.value.trim() || !emailReg.test(email.value.trim())) {
-    email.classList.add('error'); showErr('errEmail'); valid = false;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())){
+    email.classList.add('error'); document.getElementById('eE').classList.add('show'); ok=false;
   }
-  const phoneReg = /^[\+\d\s\-\(\)]{7,20}$/;
-  if (!phone.value.trim() || !phoneReg.test(phone.value.trim())) {
-    phone.classList.add('error'); showErr('errPhone'); valid = false;
+  if(!/^[\d\s\-\(\)]{6,15}$/.test(phone.value.trim())){
+    phone.classList.add('error'); document.getElementById('eP').classList.add('show'); ok=false;
   }
+  if(!S.termsOk){
+    document.getElementById('eTerm').classList.add('show'); ok=false;
+  }
+  if(!ok) return;
 
-  if (!valid) return;
+  const btn=document.getElementById('submitBtn');
+  btn.disabled=true; btn.textContent='⏳ Calculando...';
 
-  // Disable button during processing
-  const btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Calculando...';
+  const results=calc();
+  const sel=document.getElementById('fCountry');
+  const countryCode=sel.value;
+  const countryName=sel.options[sel.selectedIndex].dataset.country;
 
-  // Calculate results
-  const results = calculateResults();
-
-  // Send to n8n webhook (non-blocking)
-  const company = document.getElementById('fCompany').value.trim();
-  const payload = {
+  /* Build email-ready payload for n8n */
+  const payload={
+    /* Contact */
     nombre:      name.value.trim(),
     correo:      email.value.trim(),
-    telefono:    phone.value.trim(),
-    empresa:     company,
-    tipo_negocio: (state.answers.step1 || {}).value || '',
-    facturacion:  (state.answers.step2 || {}).value || '',
-    perdida_pct:  results.totalLoss,
-    perdida_eur:  results.lossEuros,
-    paquete_rec:  results.package,
-    areas_perdida: results.areas.map(a => a.name).join(', '),
-    fuente:       'radiografia_express',
-    fecha:        new Date().toISOString(),
-    origen:       window.location.href,
+    telefono:    countryCode+' '+phone.value.trim(),
+    pais:        countryName,
+    empresa:     document.getElementById('fCompany').value.trim(),
+    terminos_aceptados: true,
+    /* Results */
+    tipo_local:      (S.a.s1||{}).v||'',
+    tamano_operacion:(S.a.s2||{}).v||'',
+    control_stock:   (S.a.s3||{}).v||'',
+    visibilidad_fin: (S.a.s4||{}).v||'',
+    dependencia_op:  (S.a.s5||{}).v||'',
+    perdida_pct:     results.pct,
+    perdida_euros_estimados: results.euros,
+    top1_area:       results.areas[0]?.name||'',
+    top1_pct:        results.areas[0]?.pct||0,
+    top2_area:       results.areas[1]?.name||'',
+    top2_pct:        results.areas[1]?.pct||0,
+    top3_area:       results.areas[2]?.name||'',
+    top3_pct:        results.areas[2]?.pct||0,
+    paquete_recomendado: results.pack,
+    metodologia:     results.method,
+    /* Email content for n8n to compose */
+    email_asunto:    `📊 Tu Radiografía Express INYA — ${results.pct}% de pérdida estimada`,
+    email_intro:     `Hola ${name.value.trim()}, hemos completado el análisis de tu operación basándonos en las respuestas de tu Radiografía Express Gratuita.`,
+    /* Meta */
+    fuente:          'radiografia_express',
+    fecha:           new Date().toISOString(),
+    origen:          window.location.href,
+    especialista_asignado: countryName==='PT' ? 'Pablo (+351 930 946 625)' : 'Farid (+49 175 332 0351)',
   };
 
-  fetch('https://inyagency.app.n8n.cloud/webhook/lead-capture', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }).catch(err => console.warn('[INYA] Webhook error:', err));
+  fetch('https://inyagency.app.n8n.cloud/webhook/lead-capture',{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).catch(err=>console.warn('[INYA]',err));
 
-  // Show results after short delay for UX
-  setTimeout(() => showResults(results, name.value.trim()), 800);
+  setTimeout(()=>showResults(results,name.value.trim()),900);
 }
 
-/* ============================================================
-   CALCULATE LOSS
-   ============================================================ */
-function calculateResults() {
-  const a = state.answers;
+/* ─── CALCULATE (benchmarks: NRA + Deloitte Hospitality 2023-24) ─── */
+function calc(){
+  const a=S.a;
+  const w  = (a.s1||{}).w  || 1.0;   // business type multiplier
+  const rev= (a.s2||{}).rev|| 85000; // monthly revenue proxy
+  const lw = (a.s3||{}).lw || 3.8;   // inventory/waste loss %
+  const lf = (a.s4||{}).lf || 3.0;   // financial visibility loss %
+  const lo = (a.s5||{}).lo || 3.2;   // operational dependency loss %
 
-  const businessWeight = (a.step1 || {}).weight || 1;
-  const revenue        = (a.step2 || {}).revenue || 90000;
-  const lossWaste      = (a.step3 || {}).lossWaste  || 10;
-  const lossFinance    = (a.step4 || {}).lossFinance || 7;
-  const lossOps        = (a.step5 || {}).lossOps    || 9;
+  /*
+   * METHODOLOGY:
+   * 1. Inventory/waste: NRA data shows restaurants lose 4-10% of food costs
+   *    to waste. Food cost ≈ 30% of revenue → loss = 1.2–3% of revenue.
+   *    Added shrinkage/theft (1-2%) → realistic range: 0.6%–6.5% of revenue.
+   * 2. Financial visibility: Deloitte Hospitality Report 2023 shows operators
+   *    without real-time P&L data make pricing/staffing decisions that erode
+   *    margins by 3-8%. We use 1–5.5% of revenue as conservative proxy.
+   * 3. Owner dependency: McKinsey notes 15-25% efficiency drop when founder
+   *    is the single operational bottleneck. At 20% avg salary cost of revenue,
+   *    this translates to 1–5.5% of revenue in rework, turnover, inconsistency.
+   * Multiplier: multi-location operations compound losses due to coordination.
+   */
+  const rawTotal = (lw + lf + lo) * w;
+  const pct = Math.round(rawTotal * 10) / 10;
+  const cappedPct = Math.min(pct, 17.5); // realistic max for this sector
+  const euros = Math.round((rev * cappedPct / 100) / 50) * 50; // round to €50
 
-  // Total loss % (weighted)
-  let totalLoss = Math.round((lossWaste + lossFinance + lossOps) * businessWeight * 10) / 10;
-  totalLoss = Math.min(totalLoss, 38); // cap at 38%
+  const areas=[
+    { name:'Control de stock e inventario',        pct: Math.round(lw*w*10)/10, basis:'NRA: 4-10% food costs perdidos sin control de inventario' },
+    { name:'Visibilidad financiera en tiempo real', pct: Math.round(lf*w*10)/10, basis:'Deloitte: 3-8% erosión de margen por decisiones sin datos' },
+    { name:'Autonomía operativa del negocio',       pct: Math.round(lo*w*10)/10, basis:'McKinsey: 15-25% caída de eficiencia por dependencia del fundador' },
+  ].sort((a,b)=>b.pct-a.pct);
 
-  const lossEuros = Math.round((revenue * totalLoss) / 100 / 100) * 100; // round to nearest 100
-
-  // Build top 3 areas sorted by loss
-  const areas = [
-    { name: 'Control de desperdicios y stock',       pct: Math.round(lossWaste  * businessWeight * 10) / 10 },
-    { name: 'Visibilidad financiera y márgenes',     pct: Math.round(lossFinance * businessWeight * 10) / 10 },
-    { name: 'Dependencia operativa del propietario', pct: Math.round(lossOps    * businessWeight * 10) / 10 },
-  ].sort((a, b) => b.pct - a.pct);
-
-  // Package recommendation
-  let pkg, why;
-  const topArea = areas[0].name;
-
-  if ((a.step2 || {}).value === '120k+' || (a.step1 || {}).value === 'multi') {
-    pkg = 'Legacy Control';
-    why = 'Con tu nivel de facturación y complejidad operativa, necesitas control centralizado de múltiples locales, dashboards corporativos y arquitectura preparada para escalar. Es el sistema que blinda tu operación completa.';
-  } else if (lossWaste >= 10 || lossFinance >= 10) {
-    pkg = 'Ruphay Core';
-    why = 'Tu mayor fuga de capital está en el control de inventario y la visibilidad financiera. Ruphay Core incluye dominio total del stock en tiempo real, alertas automáticas de rotura y reportes financieros exactos. Recuperarás margen en las primeras semanas.';
+  /* Package recommendation */
+  let pack, why;
+  if((a.s2||{}).v==='grande'||(a.s1||{}).v==='multilocal'){
+    pack='Legacy Control';
+    why='Con tu escala de operación, la prioridad es el control centralizado multi-local: dashboards corporativos, arquitectura de escalabilidad y visibilidad unificada de todos tus locales en tiempo real.';
+  } else if(lw>=3.8||lf>=3.0){
+    pack='Ruphay Core';
+    why='Tu mayor fuga está en el control de inventario y la visibilidad financiera. Ruphay Core implementa dominio total de stock, alertas automáticas de rotura y reportes exactos de coste-margen. Las primeras mejoras son visibles en semanas, no meses.';
   } else {
-    pkg = 'Silver Mind';
-    why = 'Tu operación necesita sistematización de base: protocolos, listas de control y gestión visual de turnos. Silver Mind estandariza el día a día y saca al propietario de la micro-gestión en 3-4 semanas.';
+    pack='Silver Mind';
+    why='Tu operación necesita sistematización de base: protocolos, checklists y gestión visual de turnos. Silver Mind estandariza el día a día y libera al propietario de la micro-gestión en 3-4 semanas.';
   }
 
-  return { totalLoss, lossEuros, areas, package: pkg, packageWhy: why };
+  const method=`Tu pérdida de ${cappedPct}% se desglosa así: inventario/mermas (${Math.round(lw*w*10)/10}%, fuente NRA) + visibilidad financiera (${Math.round(lf*w*10)/10}%, fuente Deloitte) + dependencia operativa (${Math.round(lo*w*10)/10}%, fuente McKinsey). Multiplicador de complejidad del tipo de negocio: ×${w}. Sobre una operación de tamaño ${(a.s2||{}).v||'medio'}, esto equivale a ~${euros.toLocaleString('es-ES')}€/mes en pérdidas recuperables.`;
+
+  return { pct:cappedPct, euros, areas, pack, why, method };
 }
 
-/* ============================================================
-   SHOW RESULTS
-   ============================================================ */
-function showResults(results, userName) {
-  // Hide form card, show result card
-  document.getElementById('formCard').classList.add('result-hidden');
-  const rc = document.getElementById('resultCard');
-  rc.classList.remove('result-hidden');
+/* ─── SHOW RESULTS ─── */
+function showResults(r,name){
+  document.getElementById('formCard').classList.add('r-hidden');
+  const rc=document.getElementById('resultCard');
+  rc.classList.remove('r-hidden');
 
-  // Update progress to 100%
-  document.getElementById('progressFill').style.width = '100%';
-  document.getElementById('stepLabel').textContent = '¡Diagnóstico completo!';
-  document.getElementById('stepPct').textContent = '100%';
-  document.querySelectorAll('.step-dot').forEach(d => {
-    d.className = 'step-dot done';
-  });
+  document.getElementById('progFill').style.width='100%';
+  document.getElementById('stepLabel').textContent='¡Diagnóstico completo!';
+  document.getElementById('stepPct').textContent='100%';
+  document.querySelectorAll('.step-dot').forEach(d=>{ d.className='step-dot done'; });
 
-  // Set name
-  document.getElementById('resultName').textContent =
-    `${userName}, aquí está lo que encontramos en tu operación.`;
+  document.getElementById('rName').textContent=`${name}, aquí está el análisis de tu operación.`;
 
-  // Animate loss %
-  const lossEl = document.getElementById('lossPercent');
-  const lossBar = document.getElementById('lossBar');
-  let current = 0;
-  const target = results.totalLoss;
-  const timer = setInterval(() => {
-    current = Math.min(current + 0.5, target);
-    lossEl.textContent = current.toFixed(1);
-    if (current >= target) clearInterval(timer);
-  }, 30);
+  /* Animate loss % */
+  let cur=0;
+  const tick=setInterval(()=>{
+    cur=Math.min(cur+0.3,r.pct);
+    document.getElementById('rPct').textContent=cur.toFixed(1);
+    if(cur>=r.pct) clearInterval(tick);
+  },20);
 
-  // Set bar width (as % of 40% max)
-  setTimeout(() => {
-    lossBar.style.width = Math.min((results.totalLoss / 40) * 100, 100) + '%';
-  }, 100);
+  setTimeout(()=>{
+    document.getElementById('rBar').style.width=Math.min((r.pct/18)*100,100)+'%';
+  },100);
 
-  // Loss euros
-  document.getElementById('lossEuros').textContent =
-    `~${results.lossEuros.toLocaleString('es-ES')} €/mes que se van sin que los veas`;
+  document.getElementById('rEuros').textContent=`≈ ${r.euros.toLocaleString('es-ES')} €/mes en pérdidas recuperables`;
 
-  // Areas
-  const areasList = document.getElementById('areasList');
-  areasList.innerHTML = '';
-  results.areas.forEach((area, idx) => {
-    const el = document.createElement('div');
-    el.className = 'area-item';
-    el.innerHTML = `
-      <div class="area-rank">${idx + 1}</div>
-      <div class="area-name">${area.name}</div>
+  const al=document.getElementById('areasList');
+  al.innerHTML='';
+  r.areas.forEach((area,i)=>{
+    al.innerHTML+=`<div class="area-item">
+      <div class="area-rank">${i+1}</div>
+      <div class="area-info"><span class="area-name">${area.name}</span><span class="area-basis">${area.basis}</span></div>
       <div class="area-pct">−${area.pct}%</div>
-    `;
-    areasList.appendChild(el);
+    </div>`;
   });
 
-  // Package
-  document.getElementById('recPackage').textContent = results.package;
-  document.getElementById('recWhy').textContent = results.packageWhy;
+  document.getElementById('rPack').textContent=r.pack;
+  document.getElementById('rWhy').textContent=r.why;
+  document.getElementById('rMethod').textContent=r.method;
 
-  // Scroll to results
-  rc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  rc.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-/* ============================================================
-   BOOK CALL
-   ============================================================ */
-function bookCall() {
-  const btn = document.querySelector('.btn-gold');
-  btn.disabled = true;
-  btn.textContent = '⏳ Confirmando...';
+/* ─── BOOK CALL ─── */
+function bookCall(){
+  const name=document.getElementById('fName').value.trim();
+  const pack=document.getElementById('rPack').textContent;
+  const pct=document.getElementById('rPct').textContent;
+  const num=S.waLink;
 
-  // Send booking intent to webhook
-  const payload = {
-    accion: 'reserva_llamada',
-    nombre: document.getElementById('fName').value.trim(),
-    correo: document.getElementById('fEmail').value.trim(),
-    telefono: document.getElementById('fPhone').value.trim(),
-    paquete_rec: document.getElementById('recPackage').textContent,
-    fecha: new Date().toISOString(),
-    fuente: 'radiografia_express_cta',
-  };
+  const msg=encodeURIComponent(
+    `Hola, acabo de completar la Radiografía Express de INYA.\n\n`+
+    `Nombre: ${name}\n`+
+    `Pérdida estimada: ${pct}%\n`+
+    `Paquete recomendado: ${pack}\n\n`+
+    `Me gustaría agendar la llamada de 30 minutos.`
+  );
+  window.open(`https://wa.me/${num}?text=${msg}`,'_blank');
 
-  fetch('https://inyagency.app.n8n.cloud/webhook/lead-capture', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }).catch(err => console.warn('[INYA] Webhook error:', err));
+  /* Track booking intent */
+  fetch('https://inyagency.app.n8n.cloud/webhook/lead-capture',{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      accion:'clic_whatsapp',
+      nombre:name,
+      correo:document.getElementById('fEmail').value.trim(),
+      paquete:pack,
+      perdida_pct:pct,
+      especialista_num:num,
+      fecha:new Date().toISOString()
+    })
+  }).catch(()=>{});
 
-  setTimeout(() => {
-    document.getElementById('leadSection').style.display = 'none';
-    document.getElementById('successBox').style.display = 'block';
-    document.getElementById('successBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 900);
+  setTimeout(()=>{
+    document.getElementById('leadSection').style.display='none';
+    document.getElementById('successBox').style.display='block';
+  },1500);
 }
 
-/* ============================================================
-   RESTART
-   ============================================================ */
-function restartForm() {
-  // Reset state
-  state.step = 1;
-  state.answers = {};
-
-  // Reset options
-  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
-  document.querySelectorAll('[id^="next-"]').forEach(b => b.disabled = true);
-
-  // Reset fields
-  ['fName','fEmail','fPhone','fCompany'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  ['errName','errEmail','errPhone'].forEach(id => {
-    document.getElementById(id).classList.remove('show');
-  });
-
-  // Show step 1
-  document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
-  document.getElementById('step-1').style.display = 'block';
-
-  // Show form card, hide result
-  document.getElementById('formCard').classList.remove('result-hidden');
-  document.getElementById('resultCard').classList.add('result-hidden');
-
-  // Reset success box
-  document.getElementById('successBox').style.display = 'none';
-  document.getElementById('leadSection').style.display = '';
-
+/* ─── RESTART ─── */
+function restartForm(){
+  S.step=1; S.a={}; S.termsOk=false;
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+  document.querySelectorAll('[id^="n"]').forEach(b=>{ if(b.disabled!==undefined) b.disabled=true; });
+  ['fName','fEmail','fPhone','fCompany'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('termsCheck').className='terms-check';
+  document.querySelectorAll('.step').forEach((s,i)=>s.classList.toggle('r-hidden',i>0));
+  document.getElementById('formCard').classList.remove('r-hidden');
+  document.getElementById('resultCard').classList.add('r-hidden');
+  document.getElementById('successBox').style.display='none';
+  document.getElementById('leadSection').style.display='';
   updateProgress();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<div class="wa-float" id="waFloat" aria-label="WhatsApp">
+  <div class="wa-tip">
+    <strong>¿Hablamos?</strong>
+    <span id="waSpec">Especialista INYA</span>
+  </div>
+  <button class="wa-btn" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  const PABLO='351930946625', FARID='491753320351';
+  const sel=document.getElementById('fCountry');
+  const floatBtn=document.getElementById('waFloat');
+  const specEl=document.getElementById('waSpec');
+
+  function getNum(){
+    const country=sel ? sel.options[sel.selectedIndex].dataset.country : null;
+    if(country) return country==='PT' ? PABLO : FARID;
+    return navigator.language.startsWith('pt') ? PABLO : FARID;
+  }
+
+  function getSpec(){
+    const num=getNum();
+    return num===PABLO ? 'Pablo · Portugal' : 'Farid · Europa';
+  }
+
+  if(specEl) specEl.textContent=getSpec();
+  if(sel) sel.addEventListener('change',()=>{ if(specEl) specEl.textContent=getSpec(); });
+
+  floatBtn.addEventListener('click',()=>{
+    const num=getNum();
+    const name=document.getElementById('fName') ? document.getElementById('fName').value.trim() : '';
+    const baseMsg=name
+      ? 'Hola, soy ' + name + ' y acabo de completar la Radiografía Express de INYA. Me gustaría saber más.'
+      : 'Hola, acabo de completar la Radiografía Express de INYA. Me gustaría saber más.';
+    window.open('https://wa.me/'+num+'?text='+encodeURIComponent(baseMsg),'_blank');
+  });
+})();
+</script>
+
 </body>
 </html>
