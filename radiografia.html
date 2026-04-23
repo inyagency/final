@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Radiografía Exprés Gratuita — INYA</title>
+  <meta name="description" content="Descubre exactamente dónde estás perdiendo dinero cada mes. Diagnóstico interactivo gratuito en 2 minutos." />
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ---- DESIGN TOKENS ---- */
+    :root {
+      --bg:         #000000;
+      --bg-card:    #111215;
+      --bg-input:   #18181B;
+      --teal:       #0B3C49;
+      --teal-light: #1A8EA3;
+      --gold:       #C29E54;
+      --gold-light: #D9A91A;
+      --text:       #FFFFFF;
+      --text-dim:   #A1A1AA;
+      --text-mid:   #E4E4E7;
+      --border:     rgba(194,158,84,0.15);
+      --radius:     16px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+      --glow:       0 0 40px rgba(194,158,84,0.15);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-mid);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ---- BACKGROUND GRID ---- */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(11,60,73,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11,60,73,0.06) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* ---- NAVBAR ---- */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--gold); }
+    .nav-back {
+      font-size: 13px; color: var(--text-dim);
+      display: flex; align-items: center; gap: 6px;
+      transition: color var(--transition);
+      cursor: pointer;
+      background: none; border: none; font-family: inherit;
+    }
+    .nav-back:hover { color: var(--gold); }
+
+    /* ---- HERO ---- */
+    .hero {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 64px 24px 40px;
+      max-width: 700px; margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(194,158,84,0.08);
+      border: 1px solid rgba(194,158,84,0.25);
+      border-radius: 9999px;
+      padding: 6px 16px;
+      font-size: 12px; font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 800; line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .hero h1 .gold { color: var(--gold); }
+    .hero p {
+      font-size: 16px; line-height: 1.7;
+      color: var(--text-dim);
+      max-width: 520px; margin: 0 auto 32px;
+    }
+    .hero-meta {
+      display: flex; align-items: center; justify-content: center; gap: 24px;
+      flex-wrap: wrap; font-size: 13px; color: var(--text-dim);
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+    .hero-meta span::before { content: '✓'; color: var(--gold); font-weight: 700; }
+
+    /* ---- PROGRESS BAR ---- */
+    .progress-wrap {
+      position: relative; z-index: 1;
+      max-width: 640px; margin: 0 auto;
+      padding: 0 24px 40px;
+    }
+    .progress-label {
+      display: flex; justify-content: space-between;
+      font-size: 12px; color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+    .progress-track {
+      height: 4px; background: rgba(255,255,255,0.06);
+      border-radius: 9999px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 9999px;
+      background: linear-gradient(90deg, var(--teal-light), var(--gold));
+      transition: width 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .step-dots {
+      display: flex; justify-content: center; gap: 8px; margin-top: 12px;
+    }
+    .step-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .step-dot.active { background: var(--gold); transform: scale(1.3); }
+    .step-dot.done   { background: var(--teal-light); }
+
+    /* ---- CARD ---- */
+    .card-wrap {
+      position: relative; z-index: 1;
+      max-width: 640px; margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--glow);
+    }
+
+    /* ---- STEP HEADER ---- */
+    .step-num {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .step-q {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(18px, 3vw, 24px); font-weight: 700;
+      color: var(--text); line-height: 1.3; margin-bottom: 8px;
+    }
+    .step-sub {
+      font-size: 14px; color: var(--text-dim); margin-bottom: 28px;
+    }
+
+    /* ---- OPTIONS GRID ---- */
+    .options { display: grid; gap: 12px; }
+    .options.cols-2 { grid-template-columns: 1fr 1fr; }
+
+    .opt {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition), transform 0.2s;
+      text-align: left;
+    }
+    .opt:hover {
+      border-color: rgba(194,158,84,0.35);
+      background: rgba(194,158,84,0.05);
+      transform: translateY(-1px);
+    }
+    .opt.selected {
+      border-color: var(--gold);
+      background: rgba(194,158,84,0.1);
+    }
+    .opt-icon {
+      font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 1px;
+    }
+    .opt-text { flex: 1; }
+    .opt-label {
+      font-weight: 600; font-size: 14px; color: var(--text);
+      display: block; margin-bottom: 2px;
+    }
+    .opt-desc { font-size: 12px; color: var(--text-dim); }
+    .opt-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.12);
+      flex-shrink: 0; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .opt.selected .opt-check {
+      border-color: var(--gold);
+      background: var(--gold);
+    }
+    .opt.selected .opt-check::after {
+      content: '✓'; font-size: 11px; color: #000; font-weight: 800;
+    }
+
+    /* ---- INPUT FIELD ---- */
+    .field-wrap { margin-bottom: 20px; }
+    .field-label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--text-mid); margin-bottom: 8px;
+    }
+    .field-label .req { color: var(--gold); }
+    .field-input {
+      width: 100%; padding: 12px 16px;
+      background: var(--bg-input);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text); font-family: inherit; font-size: 14px;
+      transition: border-color var(--transition);
+      outline: none;
+    }
+    .field-input:focus { border-color: var(--gold); }
+    .field-input::placeholder { color: var(--text-dim); }
+    .field-input.error { border-color: #ef4444; }
+    .field-error { font-size: 12px; color: #ef4444; margin-top: 4px; display: none; }
+    .field-error.show { display: block; }
+
+    /* ---- NAVIGATION BUTTONS ---- */
+    .btn-row {
+      display: flex; gap: 12px; margin-top: 32px;
+      justify-content: space-between; align-items: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 13px 28px; border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px; font-weight: 700;
+      border: none; cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(11,60,73,0.5);
+      flex: 1;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(11,60,73,0.7); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-ghost {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-dim);
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    /* ---- RESULT SCREEN ---- */
+    .result-hidden { display: none; }
+
+    .result-header {
+      text-align: center; padding: 12px 0 32px;
+    }
+    .result-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--teal-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px; margin: 0 auto 20px;
+      box-shadow: 0 0 40px rgba(26,142,163,0.4);
+    }
+    .result-header h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(22px,4vw,32px); font-weight: 800;
+      color: var(--text); margin-bottom: 10px;
+    }
+    .result-header p { font-size: 15px; color: var(--text-dim); }
+
+    /* ---- LOSS METER ---- */
+    .loss-meter {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .loss-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .loss-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 56px; font-weight: 800;
+      color: var(--text); line-height: 1;
+      margin-bottom: 4px;
+    }
+    .loss-value span { color: var(--gold); }
+    .loss-sub { font-size: 13px; color: var(--text-dim); margin-bottom: 20px; }
+
+    .loss-bar-track {
+      height: 8px; background: rgba(255,255,255,0.06);
+      border-radius: 9999px; overflow: hidden; margin-bottom: 12px;
+    }
+    .loss-bar-fill {
+      height: 100%; border-radius: 9999px;
+      background: linear-gradient(90deg, #ef4444, #f97316);
+      transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .loss-range {
+      display: flex; justify-content: space-between;
+      font-size: 11px; color: var(--text-dim);
+    }
+
+    /* ---- TOP 3 AREAS ---- */
+    .areas-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700; color: var(--text);
+      margin-bottom: 14px;
+    }
+    .area-item {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .area-rank {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--teal-light));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .area-name { font-weight: 600; font-size: 14px; color: var(--text); }
+    .area-pct  { margin-left: auto; font-size: 13px; font-weight: 700; color: #f97316; }
+
+    /* ---- PACKAGE RECOMMENDATION ---- */
+    .pack-rec {
+      background: linear-gradient(135deg, rgba(11,60,73,0.4), rgba(26,142,163,0.1));
+      border: 1px solid rgba(194,158,84,0.3);
+      border-radius: 14px;
+      padding: 28px;
+      margin-top: 20px;
+    }
+    .pack-rec-label {
+      font-size: 11px; font-weight: 700; color: var(--gold);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .pack-rec-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 22px; font-weight: 800; color: var(--text);
+      margin-bottom: 6px;
+    }
+    .pack-rec-why { font-size: 14px; color: var(--text-dim); line-height: 1.6; }
+
+    /* ---- LEAD CAPTURE ---- */
+    .lead-section {
+      margin-top: 28px; padding-top: 28px;
+      border-top: 1px solid var(--border);
+    }
+    .lead-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px; font-weight: 700; color: var(--text);
+      margin-bottom: 6px;
+    }
+    .lead-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 20px; }
+
+    .btn-gold {
+      width: 100%;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+      color: #000; font-size: 15px;
+      padding: 16px 28px;
+      box-shadow: 0 4px 24px rgba(194,158,84,0.35);
+    }
+    .btn-gold:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(194,158,84,0.5); }
+
+    .restart-btn {
+      display: block; text-align: center; margin-top: 16px;
+      font-size: 13px; color: var(--text-dim);
+      cursor: pointer; background: none; border: none; font-family: inherit;
+      width: 100%;
+    }
+    .restart-btn:hover { color: var(--gold); }
+
+    /* ---- SUCCESS STATE ---- */
+    .success-box {
+      text-align: center; padding: 40px 20px; display: none;
+    }
+    .success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, #22C55E, #16a34a);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 36px; margin: 0 auto 20px;
+      box-shadow: 0 0 40px rgba(34,197,94,0.3);
+    }
+    .success-box h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 24px; font-weight: 800; color: var(--text); margin-bottom: 10px;
+    }
+    .success-box p { font-size: 15px; color: var(--text-dim); line-height: 1.7; max-width: 380px; margin: 0 auto; }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 600px) {
+      .card { padding: 28px 20px; }
+      .options.cols-2 { grid-template-columns: 1fr; }
+      .btn-row { flex-direction: column-reverse; }
+      .btn-ghost { width: 100%; }
+      .loss-value { font-size: 40px; }
+    }
+
+    /* ---- ANIM ---- */
+    .fade-in {
+      animation: fadeInUp 0.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes fadeInUp {
+      from { opacity:0; transform: translateY(16px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-logo">IN<span>YA</span></div>
+    <button class="nav-back" onclick="window.location.href='index.html'">
+      ← Volver al sitio
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">⚡ 2 minutos · 100% gratuito · Sin compromiso</div>
+    <h1>Descubre dónde está <span class="gold">sangrando</span><br>tu margen cada mes</h1>
+    <p>Responde 6 preguntas rápidas. Calcula tu pérdida mensual estimada y te decimos exactamente dónde atacar primero.</p>
+    <div class="hero-meta">
+      <span>Sin registro previo</span>
+      <span>Resultado inmediato</span>
+      <span>Datos 100% privados</span>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="stepLabel">Paso 1 de 6</span>
+      <span id="stepPct">0%</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="step-dots" id="stepDots"></div>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="card-wrap">
+    <div class="card fade-in" id="formCard">
+
+      <!-- STEP 1: Tipo de negocio -->
+      <div class="step" id="step-1">
+        <div class="step-num">Pregunta 1 / 6</div>
+        <div class="step-q">¿Qué tipo de negocio gastronómico tienes?</div>
+        <div class="step-sub">Esto nos ayuda a calibrar los benchmarks del sector.</div>
+        <div class="options cols-2">
+          <button class="opt" data-step="1" data-value="restaurant" data-weight="1">
+            <span class="opt-icon">🍽️</span>
+            <span class="opt-text">
+              <span class="opt-label">Restaurante</span>
+              <span class="opt-desc">Servicio de mesa, cocina tradicional</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="1" data-value="cafe" data-weight="0.8">
+            <span class="opt-icon">☕</span>
+            <span class="opt-text">
+              <span class="opt-label">Café / Brunch</span>
+              <span class="opt-desc">Cafetería, brunch, panadería</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="1" data-value="bar" data-weight="0.9">
+            <span class="opt-icon">🍺</span>
+            <span class="opt-text">
+              <span class="opt-label">Bar / Coctelería</span>
+              <span class="opt-desc">Bar, pub, coctelería</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="1" data-value="multi" data-weight="1.2">
+            <span class="opt-icon">🏢</span>
+            <span class="opt-text">
+              <span class="opt-label">Multi-local</span>
+              <span class="opt-desc">2 o más establecimientos</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="next-1" disabled onclick="nextStep(1)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Facturación mensual -->
+      <div class="step" id="step-2" style="display:none">
+        <div class="step-num">Pregunta 2 / 6</div>
+        <div class="step-q">¿Cuánto factura tu negocio al mes?</div>
+        <div class="step-sub">Aproximado está bien. Esto calibra el impacto económico real.</div>
+        <div class="options">
+          <button class="opt" data-step="2" data-value="60k" data-revenue="70000">
+            <span class="opt-icon">📈</span>
+            <span class="opt-text">
+              <span class="opt-label">Entre 30K€ y 60K€ / mes</span>
+              <span class="opt-desc">Negocio en crecimiento sólido</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="2" data-value="120k" data-revenue="90000">
+            <span class="opt-icon">🚀</span>
+            <span class="opt-text">
+              <span class="opt-label">Entre 60K€ y 120K€ / mes</span>
+              <span class="opt-desc">Volumen alto, operación compleja</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="2" data-value="120k+" data-revenue="150000">
+            <span class="opt-icon">🏆</span>
+            <span class="opt-text">
+              <span class="opt-label">Más de 120K€ / mes</span>
+              <span class="opt-desc">Gran volumen, múltiples equipos</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="prevStep(2)">← Atrás</button>
+          <button class="btn btn-primary" id="next-2" disabled onclick="nextStep(2)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Control de desperdicios -->
+      <div class="step" id="step-3" style="display:none">
+        <div class="step-num">Pregunta 3 / 6</div>
+        <div class="step-q">¿Cómo gestionas el control de desperdicios y stock?</div>
+        <div class="step-sub">El desperdicio oculto es la hemorragia más silenciosa del sector.</div>
+        <div class="options">
+          <button class="opt" data-step="3" data-value="none" data-loss-waste="18">
+            <span class="opt-icon">😬</span>
+            <span class="opt-text">
+              <span class="opt-label">No tengo sistema real</span>
+              <span class="opt-desc">Voy a ojo o confío en mi equipo sin datos</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="3" data-value="basic" data-loss-waste="10">
+            <span class="opt-icon">📋</span>
+            <span class="opt-text">
+              <span class="opt-label">Excel o papel</span>
+              <span class="opt-desc">Lo registro pero sin alertas automáticas</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="3" data-value="partial" data-loss-waste="5">
+            <span class="opt-icon">🛠️</span>
+            <span class="opt-text">
+              <span class="opt-label">Sistema parcial</span>
+              <span class="opt-desc">Uso herramientas pero no cubren todo</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="3" data-value="full" data-loss-waste="2">
+            <span class="opt-icon">✅</span>
+            <span class="opt-text">
+              <span class="opt-label">Control total automatizado</span>
+              <span class="opt-desc">Alertas, inventario en tiempo real</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="prevStep(3)">← Atrás</button>
+          <button class="btn btn-primary" id="next-3" disabled onclick="nextStep(3)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Visibilidad financiera -->
+      <div class="step" id="step-4" style="display:none">
+        <div class="step-num">Pregunta 4 / 6</div>
+        <div class="step-q">¿Conoces tu margen de rentabilidad real en tiempo real?</div>
+        <div class="step-sub">No el del contador a final de mes. El de hoy.</div>
+        <div class="options">
+          <button class="opt" data-step="4" data-value="no" data-loss-finance="12">
+            <span class="opt-icon">🙈</span>
+            <span class="opt-text">
+              <span class="opt-label">No, lo descubro cada mes</span>
+              <span class="opt-desc">Me entero al final cuando ya es tarde</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="4" data-value="weekly" data-loss-finance="7">
+            <span class="opt-icon">📅</span>
+            <span class="opt-text">
+              <span class="opt-label">Lo reviso cada semana</span>
+              <span class="opt-desc">Tengo cierta visibilidad pero con retraso</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="4" data-value="daily" data-loss-finance="3">
+            <span class="opt-icon">📊</span>
+            <span class="opt-text">
+              <span class="opt-label">Tengo datos diarios</span>
+              <span class="opt-desc">Dashboard o reportes actualizados cada día</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="prevStep(4)">← Atrás</button>
+          <button class="btn btn-primary" id="next-4" disabled onclick="nextStep(4)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- STEP 5: Dependencia del dueño -->
+      <div class="step" id="step-5" style="display:none">
+        <div class="step-num">Pregunta 5 / 6</div>
+        <div class="step-q">¿Qué pasa si te vas de vacaciones 2 semanas?</div>
+        <div class="step-sub">La dependencia del dueño es el techo de cristal más caro del sector.</div>
+        <div class="options">
+          <button class="opt" data-step="5" data-value="collapse" data-loss-ops="15">
+            <span class="opt-icon">💥</span>
+            <span class="opt-text">
+              <span class="opt-label">Se desmorona todo</span>
+              <span class="opt-desc">Imposible desconectar, siempre estoy en guardia</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="5" data-value="risky" data-loss-ops="9">
+            <span class="opt-icon">😰</span>
+            <span class="opt-text">
+              <span class="opt-label">Funciona pero con riesgo</span>
+              <span class="opt-desc">Bajo la guardia pero sigo atento al teléfono</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+          <button class="opt" data-step="5" data-value="ok" data-loss-ops="4">
+            <span class="opt-icon">👍</span>
+            <span class="opt-text">
+              <span class="opt-label">Funciona sin mí</span>
+              <span class="opt-desc">Tengo equipo y protocolos, confío en ellos</span>
+            </span>
+            <span class="opt-check"></span>
+          </button>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="prevStep(5)">← Atrás</button>
+          <button class="btn btn-primary" id="next-5" disabled onclick="nextStep(5)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- STEP 6: Datos de contacto -->
+      <div class="step" id="step-6" style="display:none">
+        <div class="step-num">Pregunta 6 / 6</div>
+        <div class="step-q">¿Dónde te enviamos el informe completo?</div>
+        <div class="step-sub">Recibirás tu diagnóstico personalizado con el plan de acción exacto.</div>
+
+        <div class="field-wrap">
+          <label class="field-label" for="fName">Nombre <span class="req">*</span></label>
+          <input class="field-input" id="fName" type="text" placeholder="Tu nombre" autocomplete="given-name" />
+          <div class="field-error" id="errName">Por favor ingresa tu nombre.</div>
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label" for="fEmail">Email <span class="req">*</span></label>
+          <input class="field-input" id="fEmail" type="email" placeholder="tu@empresa.com" autocomplete="email" />
+          <div class="field-error" id="errEmail">Ingresa un email válido.</div>
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label" for="fPhone">Teléfono <span class="req">*</span></label>
+          <input class="field-input" id="fPhone" type="tel" placeholder="+34 600 000 000" autocomplete="tel" />
+          <div class="field-error" id="errPhone">Ingresa un teléfono válido.</div>
+        </div>
+
+        <div class="field-wrap">
+          <label class="field-label" for="fCompany">Nombre del negocio</label>
+          <input class="field-input" id="fCompany" type="text" placeholder="Mi Restaurante SL" autocomplete="organization" />
+        </div>
+
+        <div class="btn-row">
+          <button class="btn btn-ghost" onclick="prevStep(6)">← Atrás</button>
+          <button class="btn btn-primary" id="submitBtn" onclick="submitForm()">Ver mi diagnóstico →</button>
+        </div>
+        <p style="font-size:11px;color:var(--text-dim);margin-top:14px;text-align:center;">
+          Sin spam. Sin compromisos. Solo claridad.
+          <a href="legal.html" style="color:var(--gold)">Política de privacidad</a>.
+        </p>
+      </div>
+
+    </div><!-- /card -->
+
+    <!-- RESULT CARD (hidden until step 6 submitted) -->
+    <div class="card fade-in result-hidden" id="resultCard">
+
+      <div class="result-header">
+        <div class="result-icon">📊</div>
+        <h2>Tu Radiografía de Pérdidas</h2>
+        <p id="resultName">Aquí está lo que encontramos en tu operación.</p>
+      </div>
+
+      <!-- Loss meter -->
+      <div class="loss-meter">
+        <div class="loss-label">Pérdida mensual estimada sobre facturación</div>
+        <div class="loss-value"><span id="lossPercent">--</span>%</div>
+        <div class="loss-sub" id="lossEuros">— €/mes que se van sin que los veas</div>
+        <div class="loss-bar-track">
+          <div class="loss-bar-fill" id="lossBar" style="width:0%"></div>
+        </div>
+        <div class="loss-range"><span>0% (óptimo)</span><span>40% (crítico)</span></div>
+      </div>
+
+      <!-- Top 3 areas -->
+      <div class="areas-title">📍 Tus 3 mayores focos de pérdida</div>
+      <div id="areasList"></div>
+
+      <!-- Package recommendation -->
+      <div class="pack-rec">
+        <div class="pack-rec-label">🎯 Paquete recomendado para ti</div>
+        <div class="pack-rec-name" id="recPackage">—</div>
+        <div class="pack-rec-why" id="recWhy">—</div>
+      </div>
+
+      <!-- Lead capture form inside result -->
+      <div class="lead-section" id="leadSection">
+        <div class="lead-title">Reserva tu Diagnóstico 1:1 Gratuito</div>
+        <div class="lead-sub">30 minutos con un especialista INYA para convertir este diagnóstico en un plan de acción concreto.</div>
+        <button class="btn btn-gold" onclick="bookCall()">Agendar llamada de 30 minutos →</button>
+        <button class="restart-btn" onclick="restartForm()">↩ Repetir el diagnóstico</button>
+      </div>
+
+      <!-- Success after booking -->
+      <div class="success-box" id="successBox">
+        <div class="success-icon">✅</div>
+        <h2>¡Perfecto, te contactamos en menos de 24h!</h2>
+        <p>Hemos recibido tu diagnóstico. Un especialista INYA revisará tu caso y te escribirá para confirmar la llamada.</p>
+      </div>
+
+    </div><!-- /resultCard -->
+  </div><!-- /card-wrap -->
+
+<script>
+/* ============================================================
+   STATE
+   ============================================================ */
+const state = {
+  step: 1,
+  totalSteps: 6,
+  answers: {},
+};
+
+/* ============================================================
+   INIT
+   ============================================================ */
+(function init() {
+  buildDots();
+  updateProgress();
+})();
+
+function buildDots() {
+  const wrap = document.getElementById('stepDots');
+  wrap.innerHTML = '';
+  for (let i = 1; i <= state.totalSteps; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === 1 ? ' active' : '');
+    d.id = 'dot-' + i;
+    wrap.appendChild(d);
+  }
+}
+
+function updateProgress() {
+  const pct = Math.round(((state.step - 1) / state.totalSteps) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('stepLabel').textContent = `Paso ${state.step} de ${state.totalSteps}`;
+  document.getElementById('stepPct').textContent = pct + '%';
+  for (let i = 1; i <= state.totalSteps; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    dot.className = 'step-dot';
+    if (i < state.step) dot.classList.add('done');
+    else if (i === state.step) dot.classList.add('active');
+  }
+}
+
+/* ============================================================
+   OPTION SELECTION
+   ============================================================ */
+document.addEventListener('click', function(e) {
+  const opt = e.target.closest('.opt');
+  if (!opt) return;
+  const step = opt.dataset.step;
+  if (!step) return;
+
+  // Deselect siblings
+  document.querySelectorAll(`.opt[data-step="${step}"]`).forEach(o => o.classList.remove('selected'));
+  opt.classList.add('selected');
+
+  // Store answer
+  state.answers['step' + step] = {
+    value:      opt.dataset.value,
+    weight:     parseFloat(opt.dataset.weight     || 1),
+    lossWaste:  parseFloat(opt.dataset.lossWaste  || 0),
+    lossFinance:parseFloat(opt.dataset.lossFinance || 0),
+    lossOps:    parseFloat(opt.dataset.lossOps    || 0),
+    revenue:    parseFloat(opt.dataset.revenue    || 0),
+  };
+
+  // Enable next button
+  const nextBtn = document.getElementById('next-' + step);
+  if (nextBtn) nextBtn.disabled = false;
+});
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function nextStep(current) {
+  const currentEl = document.getElementById('step-' + current);
+  const nextEl    = document.getElementById('step-' + (current + 1));
+  if (!nextEl) return;
+
+  currentEl.style.display = 'none';
+  nextEl.style.display    = 'block';
+  state.step = current + 1;
+  updateProgress();
+
+  // Scroll card into view
+  document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function prevStep(current) {
+  const currentEl = document.getElementById('step-' + current);
+  const prevEl    = document.getElementById('step-' + (current - 1));
+  if (!prevEl) return;
+
+  currentEl.style.display = 'none';
+  prevEl.style.display    = 'block';
+  state.step = current - 1;
+  updateProgress();
+}
+
+/* ============================================================
+   FORM SUBMIT + CALCULATE
+   ============================================================ */
+function submitForm() {
+  // Validate contact fields
+  let valid = true;
+
+  const name  = document.getElementById('fName');
+  const email = document.getElementById('fEmail');
+  const phone = document.getElementById('fPhone');
+
+  const showErr = (id) => { document.getElementById(id).classList.add('show'); };
+  const hideErr = (id) => { document.getElementById(id).classList.remove('show'); };
+
+  ['errName','errEmail','errPhone'].forEach(hideErr);
+  [name, email, phone].forEach(el => el.classList.remove('error'));
+
+  if (!name.value.trim() || name.value.trim().length < 2) {
+    name.classList.add('error'); showErr('errName'); valid = false;
+  }
+  const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email.value.trim() || !emailReg.test(email.value.trim())) {
+    email.classList.add('error'); showErr('errEmail'); valid = false;
+  }
+  const phoneReg = /^[\+\d\s\-\(\)]{7,20}$/;
+  if (!phone.value.trim() || !phoneReg.test(phone.value.trim())) {
+    phone.classList.add('error'); showErr('errPhone'); valid = false;
+  }
+
+  if (!valid) return;
+
+  // Disable button during processing
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Calculando...';
+
+  // Calculate results
+  const results = calculateResults();
+
+  // Send to n8n webhook (non-blocking)
+  const company = document.getElementById('fCompany').value.trim();
+  const payload = {
+    nombre:      name.value.trim(),
+    correo:      email.value.trim(),
+    telefono:    phone.value.trim(),
+    empresa:     company,
+    tipo_negocio: (state.answers.step1 || {}).value || '',
+    facturacion:  (state.answers.step2 || {}).value || '',
+    perdida_pct:  results.totalLoss,
+    perdida_eur:  results.lossEuros,
+    paquete_rec:  results.package,
+    areas_perdida: results.areas.map(a => a.name).join(', '),
+    fuente:       'radiografia_express',
+    fecha:        new Date().toISOString(),
+    origen:       window.location.href,
+  };
+
+  fetch('https://inyagency.app.n8n.cloud/webhook/lead-capture', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  }).catch(err => console.warn('[INYA] Webhook error:', err));
+
+  // Show results after short delay for UX
+  setTimeout(() => showResults(results, name.value.trim()), 800);
+}
+
+/* ============================================================
+   CALCULATE LOSS
+   ============================================================ */
+function calculateResults() {
+  const a = state.answers;
+
+  const businessWeight = (a.step1 || {}).weight || 1;
+  const revenue        = (a.step2 || {}).revenue || 90000;
+  const lossWaste      = (a.step3 || {}).lossWaste  || 10;
+  const lossFinance    = (a.step4 || {}).lossFinance || 7;
+  const lossOps        = (a.step5 || {}).lossOps    || 9;
+
+  // Total loss % (weighted)
+  let totalLoss = Math.round((lossWaste + lossFinance + lossOps) * businessWeight * 10) / 10;
+  totalLoss = Math.min(totalLoss, 38); // cap at 38%
+
+  const lossEuros = Math.round((revenue * totalLoss) / 100 / 100) * 100; // round to nearest 100
+
+  // Build top 3 areas sorted by loss
+  const areas = [
+    { name: 'Control de desperdicios y stock',       pct: Math.round(lossWaste  * businessWeight * 10) / 10 },
+    { name: 'Visibilidad financiera y márgenes',     pct: Math.round(lossFinance * businessWeight * 10) / 10 },
+    { name: 'Dependencia operativa del propietario', pct: Math.round(lossOps    * businessWeight * 10) / 10 },
+  ].sort((a, b) => b.pct - a.pct);
+
+  // Package recommendation
+  let pkg, why;
+  const topArea = areas[0].name;
+
+  if ((a.step2 || {}).value === '120k+' || (a.step1 || {}).value === 'multi') {
+    pkg = 'Legacy Control';
+    why = 'Con tu nivel de facturación y complejidad operativa, necesitas control centralizado de múltiples locales, dashboards corporativos y arquitectura preparada para escalar. Es el sistema que blinda tu operación completa.';
+  } else if (lossWaste >= 10 || lossFinance >= 10) {
+    pkg = 'Ruphay Core';
+    why = 'Tu mayor fuga de capital está en el control de inventario y la visibilidad financiera. Ruphay Core incluye dominio total del stock en tiempo real, alertas automáticas de rotura y reportes financieros exactos. Recuperarás margen en las primeras semanas.';
+  } else {
+    pkg = 'Silver Mind';
+    why = 'Tu operación necesita sistematización de base: protocolos, listas de control y gestión visual de turnos. Silver Mind estandariza el día a día y saca al propietario de la micro-gestión en 3-4 semanas.';
+  }
+
+  return { totalLoss, lossEuros, areas, package: pkg, packageWhy: why };
+}
+
+/* ============================================================
+   SHOW RESULTS
+   ============================================================ */
+function showResults(results, userName) {
+  // Hide form card, show result card
+  document.getElementById('formCard').classList.add('result-hidden');
+  const rc = document.getElementById('resultCard');
+  rc.classList.remove('result-hidden');
+
+  // Update progress to 100%
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('stepLabel').textContent = '¡Diagnóstico completo!';
+  document.getElementById('stepPct').textContent = '100%';
+  document.querySelectorAll('.step-dot').forEach(d => {
+    d.className = 'step-dot done';
+  });
+
+  // Set name
+  document.getElementById('resultName').textContent =
+    `${userName}, aquí está lo que encontramos en tu operación.`;
+
+  // Animate loss %
+  const lossEl = document.getElementById('lossPercent');
+  const lossBar = document.getElementById('lossBar');
+  let current = 0;
+  const target = results.totalLoss;
+  const timer = setInterval(() => {
+    current = Math.min(current + 0.5, target);
+    lossEl.textContent = current.toFixed(1);
+    if (current >= target) clearInterval(timer);
+  }, 30);
+
+  // Set bar width (as % of 40% max)
+  setTimeout(() => {
+    lossBar.style.width = Math.min((results.totalLoss / 40) * 100, 100) + '%';
+  }, 100);
+
+  // Loss euros
+  document.getElementById('lossEuros').textContent =
+    `~${results.lossEuros.toLocaleString('es-ES')} €/mes que se van sin que los veas`;
+
+  // Areas
+  const areasList = document.getElementById('areasList');
+  areasList.innerHTML = '';
+  results.areas.forEach((area, idx) => {
+    const el = document.createElement('div');
+    el.className = 'area-item';
+    el.innerHTML = `
+      <div class="area-rank">${idx + 1}</div>
+      <div class="area-name">${area.name}</div>
+      <div class="area-pct">−${area.pct}%</div>
+    `;
+    areasList.appendChild(el);
+  });
+
+  // Package
+  document.getElementById('recPackage').textContent = results.package;
+  document.getElementById('recWhy').textContent = results.packageWhy;
+
+  // Scroll to results
+  rc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ============================================================
+   BOOK CALL
+   ============================================================ */
+function bookCall() {
+  const btn = document.querySelector('.btn-gold');
+  btn.disabled = true;
+  btn.textContent = '⏳ Confirmando...';
+
+  // Send booking intent to webhook
+  const payload = {
+    accion: 'reserva_llamada',
+    nombre: document.getElementById('fName').value.trim(),
+    correo: document.getElementById('fEmail').value.trim(),
+    telefono: document.getElementById('fPhone').value.trim(),
+    paquete_rec: document.getElementById('recPackage').textContent,
+    fecha: new Date().toISOString(),
+    fuente: 'radiografia_express_cta',
+  };
+
+  fetch('https://inyagency.app.n8n.cloud/webhook/lead-capture', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  }).catch(err => console.warn('[INYA] Webhook error:', err));
+
+  setTimeout(() => {
+    document.getElementById('leadSection').style.display = 'none';
+    document.getElementById('successBox').style.display = 'block';
+    document.getElementById('successBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 900);
+}
+
+/* ============================================================
+   RESTART
+   ============================================================ */
+function restartForm() {
+  // Reset state
+  state.step = 1;
+  state.answers = {};
+
+  // Reset options
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  document.querySelectorAll('[id^="next-"]').forEach(b => b.disabled = true);
+
+  // Reset fields
+  ['fName','fEmail','fPhone','fCompany'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  ['errName','errEmail','errPhone'].forEach(id => {
+    document.getElementById(id).classList.remove('show');
+  });
+
+  // Show step 1
+  document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+  document.getElementById('step-1').style.display = 'block';
+
+  // Show form card, hide result
+  document.getElementById('formCard').classList.remove('result-hidden');
+  document.getElementById('resultCard').classList.add('result-hidden');
+
+  // Reset success box
+  document.getElementById('successBox').style.display = 'none';
+  document.getElementById('leadSection').style.display = '';
+
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
