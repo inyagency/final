@@ -5,7 +5,7 @@ const translations = {
     nav_method: "Metodología",
     nav_packs: "Paquetes",
     nav_cta: "Agendar Diagnóstico",
-    hero_badge: "Para dueños de empresas facturando <strong>60K€ - 120K€/mes</strong>",
+    hero_badge: "🔴 Solo quedan <strong>3 plazas</strong> disponibles este mes",
     hero_title: "Tu empresa factura bien.<br><span class=\"gradient-text\">Pero la falta de estructura se devora tu margen.</span>",
     hero_sub: "Implementamos Sistemas Operativos Internos para negocios gastronómicos en crecimiento. Organización absoluta, control de rentabilidad e infraestructuras que escalan. Sin caos y sin depender de ti el 100% del tiempo.",
     hero_btn_main: "Solicita tu Diagnóstico Express (Gratuito)",
@@ -91,7 +91,7 @@ const translations = {
     modal_opt_4: "Más de 120K €",
     modal_frust: "Tu mayor frustración operativa <span class=\"required\">*</span>",
     modal_btn: "Solicitar Diagnóstico →",
-    modal_btn_loading: "⏳ Procesando..."
+    modal_btn_loading: "⏳ Procesando...",
     footer_tagline: "Automatizamos y organizamos la información de tu empresa con inteligencia artificial. Tu operación, reinventada.",
     footer_services_title: "Servicios",
     footer_services_1: "Automatización de Procesos",
@@ -200,7 +200,7 @@ const translations = {
     modal_opt_4: "Over €120K",
     modal_frust: "Your biggest operational frustration <span class=\"required\">*</span>",
     modal_btn: "Request Diagnosis →",
-    modal_btn_loading: "⏳ Processing..."
+    modal_btn_loading: "⏳ Processing...",
     footer_tagline: "We automate and organize your business information with artificial intelligence. Your operation, reinvented.",
     footer_services_title: "Services",
     footer_services_1: "Process Automation",
@@ -309,7 +309,7 @@ const translations = {
     modal_opt_4: "Über 120.000 €",
     modal_frust: "Ihre größte betriebliche Frustration <span class=\"required\">*</span>",
     modal_btn: "Diagnose anfordern →",
-    modal_btn_loading: "⏳ Verarbeitung..."
+    modal_btn_loading: "⏳ Verarbeitung...",
     footer_tagline: "Wir automatisieren und organisieren Ihre Unternehmensinformationen mit künstlicher Intelligenz. Ihre Operation, neu erfunden.",
     footer_services_title: "Leistungen",
     footer_services_1: "Prozessautomatisierung",
@@ -332,7 +332,7 @@ const translations = {
     nav_method: "Metodologia",
     nav_packs: "Pacotes",
     nav_cta: "Agendar Diagnóstico",
-    hero_badge: "Para donos de empresas que faturam <strong>60K€ - 120K€/mês</strong>",
+    hero_badge: "🔴 Apenas <strong>3 vagas</strong> disponíveis este mês",
     hero_title: "A sua empresa fatura bem.<br><span class=\"gradient-text\">Mas a falta de estrutura está devorando a sua margem.</span>",
     hero_sub: "Implementamos Sistemas Operacionais Internos para negócios gastronômicos em crescimento. Organização absoluta, controle de rentabilidade e infraestrutura escalável. Sem caos e sem depender de si a 100%.",
     hero_btn_main: "Solicite o seu Diagnóstico Express (Gratuito)",
@@ -418,7 +418,7 @@ const translations = {
     modal_opt_4: "Acima de 120K €",
     modal_frust: "A sua maior frustração operacional <span class=\"required\">*</span>",
     modal_btn: "Pedir Diagnóstico →",
-    modal_btn_loading: "⏳ Processando..."
+    modal_btn_loading: "⏳ Processando...",
     footer_tagline: "Automatizamos e organizamos as informações da sua empresa com inteligência artificial. A sua operação, reinventada.",
     footer_services_title: "Serviços",
     footer_services_1: "Automatização de Processos",
