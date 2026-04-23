@@ -66,6 +66,7 @@
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-base: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 /* ---- RESET ------------------------------------------------- */
@@ -667,8 +668,8 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 32px rgba(0,0,0,0.4);
 }
 .hero-chip-icon { font-size: 16px; flex-shrink: 0; }
-.hero-chip.chip-1 { top: 8%;  left: -8%; animation: float 5s ease-in-out infinite 0.5s; }
-.hero-chip.chip-2 { bottom: 18%; left: -10%; animation: float 7s ease-in-out infinite 1s; }
+.hero-chip.chip-1 { top: 8%;  left: 2%; animation: float 5s ease-in-out infinite 0.5s; }
+.hero-chip.chip-2 { bottom: 18%; left: 1%; animation: float 7s ease-in-out infinite 1s; }
 .hero-chip.chip-3 { top: 12%; right: -8%; animation: float 6s ease-in-out infinite 0.2s; }
 
 /* Particles */
@@ -1733,7 +1734,7 @@ h1, h2, h3, h4, h5, h6 {
   .process-steps::before { display: none; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .hero-visual   { display: none; }
-  .hero-stats    { grid-template-columns: 1fr; gap: 16px; text-align: center; }
+  .hero-stats    { grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .hero-stat     { border-bottom: 1px solid rgba(var(--primary-rgb), 0.15); padding-bottom: 12px; max-width: 300px; margin: 0 auto; }
   .hero-stat:last-child { border-bottom: none; }
   .hero-cta-group { flex-direction: column; width: 100%; gap: 12px; }
