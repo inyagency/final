@@ -527,12 +527,13 @@ h1, h2, h3, h4, h5, h6 {
   animation: fade-in-up 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s both;
 }
 
-.hero-badge-dot {
+.hero-badge-dot.pulse {
   width: 8px; height: 8px;
   background: var(--gold-500);
   border-radius: 50%;
   animation: pulse-glow 2s ease-in-out infinite;
   flex-shrink: 0;
+animation: badge-pulse 2s ease-in-out infinite;
 }
 
 .hero-badge-icon {
@@ -1682,37 +1683,24 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 960px) {
   .who-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 16px;
-    padding: 4px 0 24px 0;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
   }
-  .who-grid::-webkit-scrollbar { display: none; }
   .who-card {
-    min-width: 280px;
-    max-width: 85vw;
-    scroll-snap-align: center;
-    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
   }
 
   .packages-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    gap: 16px;
-    padding: 4px 0 24px 0;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
-  .packages-grid::-webkit-scrollbar { display: none; }
   .spotify-card {
-    min-width: 280px;
-    max-width: 85vw;
-    scroll-snap-align: center;
-    flex: 0 0 auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
   }
 }
 
@@ -2277,3 +2265,178 @@ body.modal-open { overflow: hidden; }
   user-select: none;
 }
 
+
+@keyframes badge-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.4); }
+}
+
+/* ============================================================
+   VIP ANIMATIONS — Premium Agency Layer
+   ============================================================ */
+
+/* ── GRAIN TEXTURE OVERLAY (luxury feel) ── */
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 9998;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ── SPOTLIGHT CURSOR (hero only) ── */
+.hero {
+  --mx: 50%;
+  --my: 50%;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    700px circle at var(--mx) var(--my),
+    rgba(194,158,84,0.07) 0%,
+    transparent 60%
+  );
+  transition: background 0.05s;
+}
+.hero > * { position: relative; z-index: 1; }
+
+/* ── WORD REVEAL (split text stagger) ── */
+.word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.word {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  animation: wordUp 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes wordUp {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ── 3D TILT (cards) ── */
+.flip-card,
+.who-card,
+.spotify-card,
+.process-step,
+.feature-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s;
+}
+
+/* ── MAGNETIC BUTTONS ── */
+.btn-primary,
+.btn-outline,
+.nav-cta {
+  will-change: transform;
+}
+
+/* ── ANIMATED GLOW BORDER (featured package) ── */
+@keyframes gold-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(194,158,84,0.25), 0 0 0 1px rgba(194,158,84,0.4);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(194,158,84,0.45), 0 0 0 1px rgba(194,158,84,0.7), 0 0 100px rgba(194,158,84,0.15);
+  }
+}
+.spot-featured {
+  animation: gold-glow-pulse 3s ease-in-out infinite !important;
+}
+
+/* ── SCRAMBLE TEXT (section labels) ── */
+.section-label {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.15em;
+}
+
+/* ── FLOATING WHATSAPP BUTTON ── */
+.wa-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9997;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  cursor: pointer;
+  filter: drop-shadow(0 4px 20px rgba(37,211,102,0.4));
+  transition: filter 0.3s, transform 0.3s;
+}
+.wa-float:hover {
+  filter: drop-shadow(0 6px 28px rgba(37,211,102,0.65));
+  transform: translateY(-3px) scale(1.04);
+}
+.wa-float:hover .wa-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+.wa-btn {
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366 0%, #128c5e 100%);
+  display: flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+.wa-btn::before {
+  content: '';
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  background: rgba(37,211,102,0.2);
+  animation: wa-ping 2.5s ease-in-out infinite;
+}
+@keyframes wa-ping {
+  0% { transform: scale(1); opacity: 0.6; }
+  70% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+.wa-btn svg {
+  width: 28px; height: 28px; fill: #fff;
+  position: relative; z-index: 1;
+}
+.wa-tooltip {
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(37,211,102,0.25);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-right: 12px;
+  opacity: 0;
+  transform: translateX(8px);
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+  white-space: nowrap;
+  order: -1;
+}
+.wa-tooltip strong {
+  display: block;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: #fff; margin-bottom: 2px;
+}
+.wa-tooltip span {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+
+@media (max-width: 480px) {
+  .wa-float { bottom: 20px; right: 16px; }
+  .wa-btn { width: 52px; height: 52px; }
+  .wa-tooltip { display: none; }
+}
+
+/* fadeInUp alias for JS-triggered animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
