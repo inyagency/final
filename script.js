@@ -6,6 +6,17 @@
 'use strict';
 
 /* ============================================================
+   UTILITY: debounce  (declared first so IIFEs below can use it)
+   ============================================================ */
+function debounce(fn, wait) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), wait);
+  };
+}
+
+/* ============================================================
    PARTICLES SYSTEM
    ============================================================ */
 (function initParticles() {
@@ -248,227 +259,29 @@ function animateCounter(el) {
 })();
 
 /* ============================================================
-   PROOF LOGOS — color on hover (already CSS, this adds logging)
-   ============================================================ */
-
-/* ============================================================
-   UTILITY: debounce
-   ============================================================ */
-function debounce(fn, wait) {
-  let timer;
-  return function (...args) {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn.apply(this, args), wait);
-  };
-}
-
-/* ============================================================
    INIT LOG
    ============================================================ */
 console.log('%c INYA · AI Enterprise Platform ', 'background:#0B3C49;color:#C29E54;font-weight:bold;font-size:14px;padding:4px 8px;border-radius:4px;');
 console.log('%c Powered by Inya Automation ', 'color:#C29E54;font-size:11px;');
 
 /* ============================================================
-   CONTACT MODAL
-   ============================================================ */
-
-const modal = document.getElementById('contactModal');
-const contactForm = document.getElementById('contactForm');
-const successBox = document.getElementById('modalSuccess');
-
-/** Open the contact modal */
-function openModal() {
-  if (!modal) return;
-  modal.classList.add('open');
-  document.body.classList.add('modal-open');
-
-  // Focus first input after animation
-  setTimeout(() => {
-    const first = modal.querySelector('input, textarea');
-    if (first) first.focus();
-  }, 400);
-}
-
-/** Close the contact modal and reset it */
-function closeModal() {
-  if (!modal) return;
-  modal.classList.remove('open');
-  document.body.classList.remove('modal-open');
-
-  // Reset form after transition ends
-  setTimeout(() => {
-    resetForm();
-  }, 350);
-}
-
-/** Reset form to initial state */
-function resetForm() {
-  if (contactForm) contactForm.reset();
-  if (successBox) { successBox.style.display = 'none'; }
-  if (contactForm) { contactForm.style.display = ''; }
-  clearAllErrors();
-}
-
-// Close on overlay click (outside modal-box)
-if (modal) {
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
-  });
-}
-
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && modal && modal.classList.contains('open')) closeModal();
-});
-
-/* ---- VALIDATION ------------------------------------------- */
-
-function showError(inputId, errorId, message) {
-  const input = document.getElementById(inputId);
-  const error = document.getElementById(errorId);
-  if (input) input.classList.add('error');
-  if (error) error.textContent = message;
-}
-
-function clearError(inputId, errorId) {
-  const input = document.getElementById(inputId);
-  const error = document.getElementById(errorId);
-  if (input) input.classList.remove('error');
-  if (error) error.textContent = '';
-}
-
-function clearAllErrors() {
-  const pairs = [
-    ['fieldName', 'errorName'],
-    ['fieldCompany', 'errorCompany'],
-    ['fieldPhone', 'errorPhone'],
-    ['fieldEmail', 'errorEmail'],
-    ['fieldMessage', 'errorMessage'],
-    ['fieldTerms', 'errorTerms'],
-  ];
-  pairs.forEach(([i, e]) => clearError(i, e));
-}
-
-function validateForm() {
-  let valid = true;
-  clearAllErrors();
-
-  const name = document.getElementById('fieldName');
-  const company = document.getElementById('fieldCompany');
-  const phone = document.getElementById('fieldPhone');
-  const email = document.getElementById('fieldEmail');
-  const message = document.getElementById('fieldMessage');
-  const terms = document.getElementById('fieldTerms');
-
-  if (!name || name.value.trim().length < 2) {
-    showError('fieldName', 'errorName', 'Por favor ingresa tu nombre completo.');
-    valid = false;
-  }
-
-  if (!company || company.value.trim().length < 2) {
-    showError('fieldCompany', 'errorCompany', 'Por favor ingresa el nombre de tu empresa.');
-    valid = false;
-  }
-
-  const phoneVal = (phone ? phone.value.trim() : '');
-  if (!phoneVal || !/^[\+\d\s\-\(\)]{7,20}$/.test(phoneVal)) {
-    showError('fieldPhone', 'errorPhone', 'Ingresa un número de teléfono válido.');
-    valid = false;
-  }
-
-  const emailVal = (email ? email.value.trim() : '');
-  if (!emailVal || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
-    showError('fieldEmail', 'errorEmail', 'Ingresa un correo electrónico válido.');
-    valid = false;
-  }
-
-  if (!message || message.value.trim().length < 10) {
-    showError('fieldMessage', 'errorMessage', 'Por favor escribe un mensaje de al menos 10 caracteres.');
-    valid = false;
-  }
-
-  if (!terms || !terms.checked) {
-    showError('fieldTerms', 'errorTerms', 'Debes aceptar los términos y condiciones para continuar.');
-    valid = false;
-  }
-
-  return valid;
-}
-
-/* ---- FORM SUBMIT ------------------------------------------ */
-
-if (contactForm) {
-  // Clear error on input change
-  ['fieldName', 'fieldCompany', 'fieldPhone', 'fieldEmail', 'fieldMessage'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('input', () => {
-        const errId = 'error' + id.replace('field', '');
-        clearError(id, errId);
-      });
-    }
-  });
-
-  contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    const submitBtn = document.getElementById('formSubmitBtn');
-    const btnText = submitBtn ? submitBtn.querySelector('.btn-text') : null;
-    const btnLoading = submitBtn ? submitBtn.querySelector('.btn-loading') : null;
-
-    // Show loading state
-    if (btnText) btnText.style.display = 'none';
-    if (btnLoading) btnLoading.style.display = '';
-    if (submitBtn) submitBtn.disabled = true;
-
-    // Build JSON payload with all form fields
-    const payload = {
-      nombre: document.getElementById('fieldName').value.trim(),
-      empresa: document.getElementById('fieldCompany').value.trim(),
-      telefono: document.getElementById('fieldPhone') ? document.getElementById('fieldPhone').value.trim() : '',
-      correo: document.getElementById('fieldEmail') ? document.getElementById('fieldEmail').value.trim() : '',
-      mensaje: document.getElementById('fieldMessage').value.trim(),
-      terminos_aceptados: document.getElementById('fieldTerms').checked,
-      fecha_envio: new Date().toISOString(),
-      origen: window.location.href,
-      medio: 'web',
-    };
-
-    try {
-      await fetch('https://inyagency.app.n8n.cloud/webhook/lead-capture', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-    } catch (err) {
-      console.warn('[Inya] Webhook error:', err);
-    }
-
-    // Show success state
-    contactForm.style.display = 'none';
-    if (successBox) successBox.style.display = '';
-
-    // Reset button (in case modal is reopened)
-    if (btnText) btnText.style.display = '';
-    if (submitBtn) submitBtn.disabled = false;
-  });
-}
-
-
-
-/* ============================================================
    MULTI-LANGUAGE SUPPORT
    ============================================================ */
 function setLang(lang) {
+  // Deactivate all lang buttons (desktop + mobile)
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  const activeBtn = document.getElementById('lang-' + lang);
-  if (activeBtn) activeBtn.classList.add('active');
 
+  // Activate desktop button
+  const desktopBtn = document.getElementById('lang-' + lang);
+  if (desktopBtn) desktopBtn.classList.add('active');
+
+  // Activate mobile button
+  const mobileBtn = document.getElementById('mob-lang-' + lang);
+  if (mobileBtn) mobileBtn.classList.add('active');
+
+  // Apply translations
   if (typeof translations !== 'undefined' && translations[lang]) {
     const dict = translations[lang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -478,7 +291,7 @@ function setLang(lang) {
       }
     });
   }
-  
+
   try {
     localStorage.setItem('inya_lang', lang);
   } catch (e) {}
@@ -491,13 +304,13 @@ function setLang(lang) {
     if (saved) {
       lang = saved;
     } else {
-      const browserLang = navigator.language.slice(0,2).toLowerCase();
-      if (['es','en','de','pt'].includes(browserLang)) {
+      const browserLang = navigator.language.slice(0, 2).toLowerCase();
+      if (['es', 'en', 'de', 'pt'].includes(browserLang)) {
         lang = browserLang;
       }
     }
   } catch (e) {}
-  
+
   if (typeof translations !== 'undefined') {
     // translations.js loaded sync before script.js, safe to call
     setLang(lang);
